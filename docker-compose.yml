@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  understand-quran:
+    build: ./understand-quran/docker
+    command: /build.sh
+    ports:
+      - 3000:3000
+    volumes:
+      - ./understand-quran/docker/build.sh:/build.sh
+      - ./understand-quran/code:/code
