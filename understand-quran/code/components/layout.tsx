@@ -1,9 +1,14 @@
-import { FC } from 'react'
+import React, { FC } from 'react';
+import PropTypes from 'prop-types';
 
-import styles from './layout.module.scss'
+import styles from './layout.module.scss';
 
 const Layout: FC = ({ children }) => (
   <div className={styles.container}>{children}</div>
-)
+);
 
-export default Layout
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default Layout;
