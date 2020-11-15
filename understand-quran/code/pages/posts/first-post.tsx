@@ -1,8 +1,8 @@
-import { FC } from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
+import React, { FC } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
 
-import Layout from '../../components/layout'
+import Layout from '../../components/layout';
 
 const FirstPost: FC = () => (
   <Layout>
@@ -11,10 +11,12 @@ const FirstPost: FC = () => (
     </Head>
     <h2>
       <Link href="/">
-        <a>Back to home</a>
+        Back to home
       </Link>
     </h2>
   </Layout>
-)
+);
 
-export default FirstPost
+FirstPost.propTypes = {};
+
+export default FirstPost;
