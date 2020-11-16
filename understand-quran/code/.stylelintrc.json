@@ -1,0 +1,6 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "rules": {
+    "selector-class-pattern": "^uq-([A-Z][a-z]*)+((-[a-z]+([A-Z][a-z]*)*)*|(--[a-z]+([A-Z][a-z]*)*)|\\.(is|has)-[a-z]+([A-Z][a-z]*)*)$"
+  }
+}
