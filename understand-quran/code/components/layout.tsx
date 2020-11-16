@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './layout.module.scss';
 
 const Layout: FC = ({ children }) => (
-  <div className={styles.container}>{children}</div>
+  <div className={styles['uq-Layout']}>{children}</div>
 );
 
 Layout.propTypes = {
