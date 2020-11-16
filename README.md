@@ -34,3 +34,8 @@ Help understanding the Holy Qur'an
 1. NextJS
 1. Docker
 1. Docker Compose
+1. stylelint
+1. eslint
+
+## Conventions
+1. SuiteCSS
