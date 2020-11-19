@@ -3,7 +3,7 @@
 cd /code
 yarn install
 
-while ! (yarn run code-lint && yarn run style-lint && yarn run build && yarn run dev)
+while ! (yarn run lint && yarn run build && yarn run dev)
 do
   echo "$(date) - restarting server ..."
   sleep 1

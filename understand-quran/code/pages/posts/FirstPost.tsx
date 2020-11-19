@@ -1,14 +1,10 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 
-import Layout from '../../components/layout';
+import Layout from '../../components/Layout';
 
 const FirstPost: FC = () => (
-  <Layout>
-    <Head>
-      <title>First Post</title>
-    </Head>
+  <Layout pageTitle="First Post">
     <h2>
       <Link href="/">
         Back to home
@@ -16,7 +12,5 @@ const FirstPost: FC = () => (
     </h2>
   </Layout>
 );
-
-FirstPost.propTypes = {};
 
 export default FirstPost;
