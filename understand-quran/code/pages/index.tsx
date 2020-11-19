@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import { Card } from '../lib';
+import { Card } from '@lib';
 
 const Index: FC = () => (
   <>
