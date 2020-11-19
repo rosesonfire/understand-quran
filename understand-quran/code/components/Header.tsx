@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import classNames from 'classnames';
 import { Avatar, Link as MaterialLink, Typography } from '@material-ui/core';
 
 import styles from './header.module.scss';
@@ -12,7 +13,10 @@ type HeaderProps = {
 };
 
 const Header: FC<HeaderProps> = ({ isHome }) => (
-  <header className={styles['uq-Header']}>
+  <header className={classNames({
+    [styles['uq-Header']]: true,
+    [styles['uq-Header--home']]: isHome,
+  })}>
     {isHome ? (
       <>
         <Avatar alt={name} src="/images/profile.jpg" />
