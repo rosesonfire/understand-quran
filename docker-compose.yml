@@ -6,7 +6,14 @@ services:
     command: /build.sh
     ports:
       - 3000:3000
-      - 6006:6006
     volumes:
       - ./understand-quran/docker/build.sh:/build.sh
+      - ./understand-quran/code:/code
+  storybook:
+    build: ./understand-quran/docker
+    command: /build-storybook.sh
+    ports:
+      - 6006:6006
+    volumes:
+      - ./understand-quran/docker/build-storybook.sh:/build-storybook.sh
       - ./understand-quran/code:/code
