@@ -59,6 +59,7 @@ Helps understanding the Holy Qur'an
 1. Eslint
 1. Storybook
 1. Material UI
+1. Verdaccio (private npm registry)
 
 ## Conventions
 1. SuiteCSS
