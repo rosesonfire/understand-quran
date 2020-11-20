@@ -9,6 +9,8 @@ services:
     volumes:
       - ./understand-quran/docker/build.sh:/build.sh
       - ./understand-quran/code:/code
+    depends_on:
+      - verdaccio
   storybook:
     build: ./understand-quran/docker
     command: /build-storybook.sh
@@ -17,3 +19,13 @@ services:
     volumes:
       - ./understand-quran/docker/build-storybook.sh:/build-storybook.sh
       - ./understand-quran/code:/code
+    depends_on:
+      - verdaccio
+  verdaccio:
+    build: ./npm-registry/docker
+    ports:
+      - 4873:4873
+    volumes:
+      - ./npm-registry/code/storage:/verdaccio/storage
+      - ./npm-registry/code/conf:/verdaccio/conf
+      - ./npm-registry/code/plugins:/verdaccio/plugins
