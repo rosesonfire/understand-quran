@@ -30,7 +30,7 @@ uplinks:
     url: https://registry.npmjs.org/
 
 packages:
-  'uq-*':
+  '@uq/*':
     access: $all
     publish: $authenticated
     unpublish: $authenticated

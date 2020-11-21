@@ -6,34 +6,35 @@ Helps understanding the Holy Qur'an
 1. Docker Compose
 
 # Services
-
 - understand-quran: front end
-- storybook: design library for the front end
+- design-library: a design library for the front end
+- verdaccio: private npm registry
 
 ## Run all services
-```
+```bash
 ./start
 ```
 
 ## Stop all services
-```
+```bash
 ./stop
 ```
 
 ## URLs
 
 - understand-quran: http://localhost:3000
-- storybook: http://localhost:6006
+- design-library: http://localhost:6006
+- verdaccio: http://localhost:4873
 
 ## View logs
-
-- understand-quran: `./logs-understand-quran`
-- storybook: `./logs-storybook`
+```bash
+./logs-<service name>
+```
 
 ## Shell into services
-
-- understand-quran: `./shell-understand-quran`
-- storybook: `./shell-storybook`
+```bash
+./shell-<service name>
+```
 
 # Tech used
 
@@ -60,6 +61,7 @@ Helps understanding the Holy Qur'an
 1. Storybook
 1. Material UI
 1. Verdaccio (private npm registry)
+1. Webpack
 
 ## Conventions
 1. SuiteCSS

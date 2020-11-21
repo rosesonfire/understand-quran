@@ -13,10 +13,12 @@ type HeaderProps = {
 };
 
 const Header: FC<HeaderProps> = ({ isHome }) => (
-  <header className={classNames({
-    [styles['uq-Header']]: true,
-    [styles['uq-Header--home']]: isHome,
-  })}>
+  <header
+    className={classNames({
+      [styles['uq-Header']]: true,
+      [styles['uq-Header--home']]: isHome,
+    })}
+  >
     {isHome ? (
       <>
         <Avatar alt={name} src="/images/profile.jpg" />

@@ -2,9 +2,8 @@ import React, { FC } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import '../styles/global.scss';
-
-import { siteDescription, siteTitle } from '../copies/global';
+import '@styles/global.scss';
+import { siteDescription, siteTitle } from '@copies/global';
 
 // eslint-disable-next-line react/prop-types
 const App: FC<AppProps> = ({ Component, pageProps }) => (

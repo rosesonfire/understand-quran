@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Head from 'next/head';
 
+import { Children, DefaultProps } from '@utils/react-utils';
+
 import Header from './Header';
 import styles from './layout.module.scss';
-import { Children, DefaultProps } from '../utils/react-utils';
 
 type Props = {
   children: Children,

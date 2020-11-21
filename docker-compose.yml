@@ -10,15 +10,15 @@ services:
       - ./understand-quran/docker/build.sh:/build.sh
       - ./understand-quran/code:/code
     depends_on:
-      - verdaccio
-  storybook:
-    build: ./understand-quran/docker
-    command: /build-storybook.sh
+      - design-library
+  design-library:
+    build: ./design-library/docker
+    command: /build.sh
     ports:
       - 6006:6006
     volumes:
-      - ./understand-quran/docker/build-storybook.sh:/build-storybook.sh
-      - ./understand-quran/code:/code
+      - ./design-library/docker/build.sh:/build.sh
+      - ./design-library/code:/code
     depends_on:
       - verdaccio
   verdaccio:
