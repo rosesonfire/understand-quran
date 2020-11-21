@@ -1,7 +1,6 @@
 ls: 
   .tsx: PascalCase
   .scss: camelCase
-  .module.scss: camelCase
   .js: regex:^$
   .jsx: regex:^$
   .html: regex:^$
@@ -10,8 +9,7 @@ ls:
 ignore:
   - ./node_modules
   - ./.eslintrc.js
-  - ./.next
-  - ./next.config.js
-  - ./pages/_app.tsx
-  - ./pages/index.tsx
+  - ./utils
   - ./storybook-static
+  - ./.storybook
+  - ./stories

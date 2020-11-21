@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
+import { Card } from '@uq/design-library';
 import {
   Grid,
   Link as MaterialLink,
   Typography,
 } from '@material-ui/core';
-
-import { Card } from '@lib';
 
 const Index: FC = () => (
   <>

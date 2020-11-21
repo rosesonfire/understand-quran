@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker-compose exec understand-quran /bin/bash
+docker-compose exec -w /code understand-quran /bin/bash

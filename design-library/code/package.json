@@ -1,24 +1,20 @@
 {
-  "name": "understand-quran",
+  "name": "design-library",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
     "type-check": "tsc",
-    "style-lint": "stylelint \"**/*.css\" \"**/*.scss\"",
+    "style-lint": "stylelint --allow-empty-input \"**/*.css\" \"**/*.scss\"",
     "code-lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "filename-lint": "ls-lint",
     "lint": "yarn run filename-lint && yarn run code-lint && yarn run style-lint",
     "print-elsint-config": "eslint --print-config ./pages/_app.tsx",
     "start-storybook": "start-storybook -p 6006",
-    "build-stories": "build-storybook"
+    "build-stories": "rm -rf storybook-static && build-storybook"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "classnames": "^2.2.6",
-    "next": "^10.0.0",
     "prop-types": "15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -49,6 +45,7 @@
     "eslint-plugin-sort-destructure-keys": "^1.3.5",
     "stylelint": "^13.7.2",
     "stylelint-config-sass-guidelines": "^7.1.0",
-    "typescript": "^4.0"
+    "typescript": "^4.0",
+    "sass-loader": "^10.1.0"
   }
 }
