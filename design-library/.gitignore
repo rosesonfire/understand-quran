@@ -3,3 +3,6 @@ node_modules
 
 # storybook
 storybook-static
+
+dist
+yarn-error.log

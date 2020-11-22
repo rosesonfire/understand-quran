@@ -9,6 +9,12 @@ services:
     volumes:
       - ./understand-quran/docker/build.sh:/build.sh
       - ./understand-quran/code:/code
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
     depends_on:
       - design-library
   design-library:
@@ -19,9 +25,15 @@ services:
     volumes:
       - ./design-library/docker/build.sh:/build.sh
       - ./design-library/code:/code
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6006"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
     depends_on:
-      - verdaccio
-  verdaccio:
+      - npm-registry
+  npm-registry:
     build: ./npm-registry/docker
     ports:
       - 4873:4873
@@ -29,3 +41,9 @@ services:
       - ./npm-registry/code/storage:/verdaccio/storage
       - ./npm-registry/code/conf:/verdaccio/conf
       - ./npm-registry/code/plugins:/verdaccio/plugins
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4873"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s

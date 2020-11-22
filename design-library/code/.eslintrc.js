@@ -18,7 +18,7 @@ module.exports = {
   rules: {
     'sort-keys': 'error',
     'sort-vars': 'error',
-    "sort-destructure-keys/sort-destructure-keys": 2,
+    'sort-destructure-keys/sort-destructure-keys': 2,
     '@typescript-eslint/member-ordering': [
       'error',
       {

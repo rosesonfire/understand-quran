@@ -2,3 +2,5 @@ node_modules
 .eslintrc.js
 stories
 storybook-static
+webpack.prod.js
+dist

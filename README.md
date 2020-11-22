@@ -8,7 +8,7 @@ Helps understanding the Holy Qur'an
 # Services
 - understand-quran: front end
 - design-library: a design library for the front end
-- verdaccio: private npm registry
+- npm-registry: private npm registry
 
 ## Run all services
 ```bash
@@ -24,7 +24,7 @@ Helps understanding the Holy Qur'an
 
 - understand-quran: http://localhost:3000
 - design-library: http://localhost:6006
-- verdaccio: http://localhost:4873
+- npm-registry: http://localhost:4873
 
 ## View logs
 ```bash
