@@ -13,3 +13,5 @@ ignore:
   - ./storybook-static
   - ./.storybook
   - ./stories
+  - ./webpack.prod.js
+  - ./dist
