@@ -60,8 +60,10 @@ Helps understanding the Holy Qur'an
 1. Eslint
 1. Storybook
 1. Material UI
-1. Verdaccio (private npm registry)
+1. Babel
 1. Webpack
+1. Verdaccio (private npm registry)
+1. NPM (for creating, publishing and reusing private packages)
 
 ## Conventions
 1. SuiteCSS
