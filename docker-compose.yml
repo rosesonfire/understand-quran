@@ -16,7 +16,7 @@ services:
       retries: 3
       start_period: 40s
     depends_on:
-      - design-library
+      - npm-registry
   design-library:
     build: ./design-library/docker
     command: /build.sh
