@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-type Props = {
+export type Props = {
   description: string,
   link: string,
   name: string,
@@ -16,7 +16,7 @@ type Props = {
 const Card: FC<Props> = ({ description, link, name }) => (
   <MaterialCard>
     <CardContent>
-      <Link href={link}>
+      <Link href={link} target="_blank">
         <Typography variant="h3">
           {name}
         </Typography>

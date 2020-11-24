@@ -20,7 +20,8 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-        "@lib": ["src"]
+        "@lib": ["src/"],
+        "@utils": ["src/utils/"]
     }
   },
   "exclude": ["node_modules"],
