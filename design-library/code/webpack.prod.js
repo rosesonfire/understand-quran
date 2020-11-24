@@ -22,6 +22,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@lib': path.resolve(__dirname, 'src/'),
+      '@utils': path.resolve(__dirname, 'src/', 'utils/'),
+    },
   },
   externals: {
     react: {

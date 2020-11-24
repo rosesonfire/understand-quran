@@ -1,5 +1,6 @@
 ls: 
   .tsx: PascalCase
+  .stories.tsx: PascalCase
   .scss: camelCase
   .js: regex:^$
   .jsx: regex:^$
@@ -9,7 +10,7 @@ ls:
 ignore:
   - ./node_modules
   - ./.eslintrc.js
-  - ./utils
+  - ./src/utils
   - ./storybook-static
   - ./.storybook
   - ./stories

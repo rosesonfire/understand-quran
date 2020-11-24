@@ -2,12 +2,14 @@ const path = require('path');
 
 module.exports = {
   stories: [
-    '../stories/**/*.stories.mdx',
-    '../stories/**/*.stories.@(js|jsx|ts|tsx)'
+    // '../stories/**/*.stories.mdx',
+    // '../stories/**/*.stories.@(js|jsx|ts|tsx)',
+    '../src/**/*.stories.mdx',
+    '../src/**/*.stories.tsx',
   ],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-essentials'
+    '@storybook/addon-essentials',
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -20,6 +22,9 @@ module.exports = {
       use: ['style-loader', 'css-loader', 'sass-loader'],
       include: path.resolve(__dirname, '../'),
     });
+
+    config.resolve.alias['@lib'] = path.resolve(__dirname, '../', 'src/');
+    config.resolve.alias['@utils'] = path.resolve(__dirname, '../', 'src/', 'utils/');
 
     // Return the altered config
     return config;
