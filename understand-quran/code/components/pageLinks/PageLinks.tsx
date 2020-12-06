@@ -43,16 +43,16 @@ const PageLinks: FC = () => (
     <GridItem>
       <PageLink
         description="Without state"
-        href="/rendering/irs/irs-without-state"
-        name="IRS&rarr;"
+        href="/rendering/isr/isr-without-state"
+        name="ISR&rarr;"
       />
     </GridItem>
 
     <GridItem>
       <PageLink
         description="With state"
-        href="/rendering/irs/irs-with-state"
-        name="IRS&rarr;"
+        href="/rendering/isr/isr-with-state"
+        name="ISR&rarr;"
       />
     </GridItem>
 

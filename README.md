@@ -75,11 +75,12 @@ Helps understanding the Holy Qur'an
 ## Frameworks and libraries
 1. ReactJS
 1. NextJS
-    - Client side rendering
-    - Server side rendering
-    - Static generation
     - Code splitting
     - Prefetching
+    - Server-side rendering at runtime
+    - Automatically rendered as static HTML
+    - Automatically generated as static HTML + JSON
+    - Incremental static regeneration
 1. Docker
 1. Docker Compose
 1. Stylelint

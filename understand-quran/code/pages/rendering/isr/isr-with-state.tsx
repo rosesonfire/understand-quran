@@ -10,7 +10,7 @@ type Props = {
   value2: string,
 };
 
-const IRSWithState: FC<Props> = ({ value1, value2 }) => {
+const ISRWithState: FC<Props> = ({ value1, value2 }) => {
   const [name, setName] = useState('<name>');
 
   const onChange = getKeyPressHandler(setName);
@@ -36,7 +36,7 @@ const IRSWithState: FC<Props> = ({ value1, value2 }) => {
   );
 };
 
-IRSWithState.propTypes = {
+ISRWithState.propTypes = {
   value1: PropTypes.string.isRequired,
   value2: PropTypes.string.isRequired,
 };
@@ -49,4 +49,4 @@ export const getStaticProps: GetStaticProps<Props> = async () => ({
   revalidate: 10, // seconds
 });
 
-export default IRSWithState;
+export default ISRWithState;
