@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -x
+set -e
+
+npm_registry=http://npm-registry:4873
+
+# Wait till 'npm-registry' container is up
+while ! curl $npm_registry 1> /dev/null
+do
+  echo "$(date) - waiting for npm-registry ..."
+  sleep 1
+done
+
+# Set working directory
+cd /code
+
+# Update design-library patch version before publishing
+# yarn version --patch
+
+# build
+while ! yarn run build
+do
+  echo "$(date) - restarting server ..."
+  sleep 1
+done
+
+# First remove the previous version to save space and then publish the new version
+npm unpublish "@uq/design-library" --registry $npm_registry --force
+npm publish --registry $npm_registry

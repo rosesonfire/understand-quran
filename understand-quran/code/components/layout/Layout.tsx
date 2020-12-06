@@ -1,15 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import { Children, DefaultProps } from '@utils/react-utils';
+import { DefaultProps } from '@utils/react-utils';
 
-import Header from './Header';
+import { Header } from '@components';
+
 import styles from './layout.module.scss';
 
 type Props = {
-  children: Children,
+  children: ReactElement,
   isHome?: boolean,
   pageTitle: string,
 };
@@ -45,7 +46,7 @@ const Layout: FC<Props> = ({
 );
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.element.isRequired,
   isHome: PropTypes.bool,
   pageTitle: PropTypes.string.isRequired,
 };

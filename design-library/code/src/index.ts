@@ -1,4 +1,4 @@
-import Card_ from './Card';
+import Card_ from './card';
 import Dummy_ from './Dummy';
 
 export const Card = Card_;

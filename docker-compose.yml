@@ -3,12 +3,18 @@ version: '2'
 services:
   understand-quran:
     build: ./understand-quran/docker
-    command: /build.sh
+    command: /build
     ports:
       - 3000:3000
+      - 4000:4000
+      - 9229:9229
     volumes:
-      - ./understand-quran/docker/build.sh:/build.sh
+      - ./understand-quran/docker/build:/build
+      - ./understand-quran/docker/reinstall-design-library:/reinstall-design-library
       - ./understand-quran/code:/code
+    environment:
+      - ENV=dev
+      # - ENV=production
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 30s
@@ -19,11 +25,12 @@ services:
       - npm-registry
   design-library:
     build: ./design-library/docker
-    command: /build.sh
+    command: /build
     ports:
       - 6006:6006
     volumes:
-      - ./design-library/docker/build.sh:/build.sh
+      - ./design-library/docker/build:/build
+      - ./design-library/docker/re-publish:/re-publish
       - ./design-library/code:/code
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:6006"]

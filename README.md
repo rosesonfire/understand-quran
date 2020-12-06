@@ -20,6 +20,11 @@ Helps understanding the Holy Qur'an
 ./stop
 ```
 
+## Restart services
+```bash
+./restart <service name>
+```
+
 ## URLs
 
 - understand-quran: http://localhost:3000
@@ -28,13 +33,34 @@ Helps understanding the Holy Qur'an
 
 ## View logs
 ```bash
-./logs-<service name>
+./logs <service name>
 ```
 
 ## Shell into services
 ```bash
 ./shell-<service name>
 ```
+
+## Debug
+### understand-quran
+- Client side code: Use `debugger`
+- Server side code: Add `debugger` to server side code. 
+  - Chrome: Go to `chrome://inspect/ -> Under "Remote Targets" click on "inspect"`
+  - VSCode: Add this debugger configuration and lauch after starting server:
+    ```
+    {
+      "version": "0.2.0",
+      "configurations": [
+        {
+          "type": "node",
+          "request": "attach",
+          "name": "Launch Program",
+          "skipFiles": ["<node_internals>/**"],
+          "port": 9229
+        }
+      ]
+    }
+    ```
 
 # Tech used
 

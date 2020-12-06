@@ -2679,13 +2679,12 @@
 
 "@uq/design-library@^0.1.0":
   version "0.1.0"
-  resolved "http://npm-registry:4873/@uq%2fdesign-library/-/design-library-0.1.0.tgz#499c73b558bfab6489681082d45f83f38cc1b2d5"
-  integrity sha512-PT8gsLa6Y2vex1BYiGwNXWPaXGisCA3jSGqoG6xHazhDjwDpk9eLDyZq0vPGbifXaX2N19GLvVd+g93TcnylxQ==
+  resolved "http://npm-registry:4873/@uq%2fdesign-library/-/design-library-0.1.0.tgz#66da56d1e6c6ab5a745e22f1900d8cfd4b8ec745"
+  integrity sha512-cFEbNxZeDq5ZqIDnFL5lUQ2apYYsuZtDu4/OSSOXIJg7THiD+W3CxXLKc/PTMRJ/AMwow1+IHFQDTVKncebszQ==
   dependencies:
     "@material-ui/core" "^4.11.0"
     classnames "^2.2.6"
     prop-types "15.7.2"
-    sass "1.29.0"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
