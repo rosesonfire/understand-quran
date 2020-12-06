@@ -1,22 +1,30 @@
 import React, { FC } from 'react';
+import PropTypes from 'prop-types';
 import {
   Card as MaterialCard,
   CardContent,
-  Link,
   Typography,
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
+
+import CardLink from './CardLink';
 
 export type Props = {
+  LinkComponent?: FC<{ href: string, target: string }>,
   description: string,
-  link: string,
+  href: string,
   name: string,
 };
 
-const Card: FC<Props> = ({ description, link, name }) => (
+const Card: FC<Props> = ({
+  description,
+  href,
+  name,
+}) => (
   <MaterialCard>
     <CardContent>
-      <Link href={link} target="_blank">
+      <CardLink
+        href={href}
+      >
         <Typography variant="h3">
           {name}
         </Typography>
@@ -24,14 +32,14 @@ const Card: FC<Props> = ({ description, link, name }) => (
         <Typography paragraph>
           {description}
         </Typography>
-      </Link>
+      </CardLink>
     </CardContent>
   </MaterialCard>
 );
 
 Card.propTypes = {
   description: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };
 

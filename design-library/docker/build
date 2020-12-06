@@ -1,23 +1,33 @@
-#!/bin/sh
+#!/bin/bash
 
-while ! curl http://npm-registry:4873
+set -x
+set -e
+
+npm_registry=http://npm-registry:4873
+
+# Wait till 'npm-registry' container is up
+while ! curl $npm_registry 1> /dev/null
 do
   echo "$(date) - waiting for npm-registry ..."
   sleep 1
 done
 
+# Set working directory
 cd /code
+
+# Install packages
 yarn install
 
-while ! (yarn run lint && yarn run build)
+# Lint
+while ! yarn run lint
 do
   echo "$(date) - restarting server ..."
   sleep 1
 done
 
-npm unpublish "@uq/design-library" --registry http://npm-registry:4873 --force
-npm publish --registry http://npm-registry:4873
+/re-publish
 
+# Build and run storybook
 while ! (yarn run build-stories && yarn run start-storybook)
 do
   echo "$(date) - restarting server ..."

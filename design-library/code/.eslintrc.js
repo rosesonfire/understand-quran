@@ -19,6 +19,7 @@ module.exports = {
     'sort-keys': 'error',
     'sort-vars': 'error',
     'sort-destructure-keys/sort-destructure-keys': 2,
+    'react/jsx-sort-props': 'error',
     '@typescript-eslint/member-ordering': [
       'error',
       {
@@ -27,6 +28,8 @@ module.exports = {
         },
       },
     ],
-    'react/jsx-sort-props': 'error',
+    'no-console': [
+      'error'
+    ],
   },
 };

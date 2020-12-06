@@ -18,7 +18,8 @@ module.exports = {
   rules: {
     'sort-keys': 'error',
     'sort-vars': 'error',
-    "sort-destructure-keys/sort-destructure-keys": 2,
+    'sort-destructure-keys/sort-destructure-keys': 2,
+    'react/jsx-sort-props': 'error',
     '@typescript-eslint/member-ordering': [
       'error',
       {
@@ -27,6 +28,32 @@ module.exports = {
         },
       },
     ],
-    'react/jsx-sort-props': 'error',
+    'react/jsx-props-no-spreading': [
+      'error',
+      {
+        'html': 'enforce',
+        'custom': 'enforce',
+        'explicitSpread': 'ignore',
+        'exceptions': [
+          'Grid',
+        ],
+      },
+    ],
+    'no-console': [
+      'error'
+    ],
+    'padding-line-between-statements': [
+      'error',
+      {
+        blankLine: 'always',
+        prev: 'function',
+        next: 'function',
+      },
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: 'return',
+      },
+    ],
   },
 };

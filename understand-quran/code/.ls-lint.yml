@@ -1,5 +1,5 @@
 ls: 
-  .tsx: PascalCase
+  .tsx: PascalCase | kebabcase
   .scss: camelCase
   .module.scss: camelCase
   .js: regex:^$
