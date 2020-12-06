@@ -2679,8 +2679,8 @@
 
 "@uq/design-library@^0.1.0":
   version "0.1.0"
-  resolved "http://npm-registry:4873/@uq%2fdesign-library/-/design-library-0.1.0.tgz#66da56d1e6c6ab5a745e22f1900d8cfd4b8ec745"
-  integrity sha512-cFEbNxZeDq5ZqIDnFL5lUQ2apYYsuZtDu4/OSSOXIJg7THiD+W3CxXLKc/PTMRJ/AMwow1+IHFQDTVKncebszQ==
+  resolved "http://npm-registry:4873/@uq%2fdesign-library/-/design-library-0.1.0.tgz#9a63fdb09c12e49b0559a580e19f71de844a40f4"
+  integrity sha512-wkHCfO5yB6PTZT6TH3Sz9GWckti9QWpo6OvLxQKmO8XwI6JSpnuLDFd5J+UYoM39wIBYYYy54NLXuyprMrzV/g==
   dependencies:
     "@material-ui/core" "^4.11.0"
     classnames "^2.2.6"

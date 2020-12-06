@@ -9,7 +9,7 @@ type Props = {
   value2: string,
 };
 
-const IRSWithoutState: FC<Props> = ({ value1, value2 }) => (
+const ISRWithoutState: FC<Props> = ({ value1, value2 }) => (
   <Card>
     <CardItem
       name="Item 1"
@@ -23,7 +23,7 @@ const IRSWithoutState: FC<Props> = ({ value1, value2 }) => (
   </Card>
 );
 
-IRSWithoutState.propTypes = {
+ISRWithoutState.propTypes = {
   value1: PropTypes.string.isRequired,
   value2: PropTypes.string.isRequired,
 };
@@ -36,4 +36,4 @@ export const getStaticProps: GetStaticProps<Props> = async () => ({
   revalidate: 10, // seconds
 });
 
-export default IRSWithoutState;
+export default ISRWithoutState;
