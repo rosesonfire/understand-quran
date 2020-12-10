@@ -71,6 +71,22 @@ const PageLinks: FC = () => (
         name="Static&rarr;"
       />
     </GridItem>
+
+    <GridItem>
+      <PageLink
+        description="Without state"
+        href="/rendering/client-side/client-side-without-state"
+        name="Client side&rarr;"
+      />
+    </GridItem>
+
+    <GridItem>
+      <PageLink
+        description="With state"
+        href="/rendering/client-side/client-side-with-state"
+        name="Client side&rarr;"
+      />
+    </GridItem>
   </Grid>
 );
 

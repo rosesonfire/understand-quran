@@ -17,13 +17,17 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@material-ui/icons": "^4.11.2",
     "@uq/design-library": "^0.1.0",
+    "axios": "^0.21.0",
     "classnames": "^2.2.6",
     "next": "^10.0.0",
-    "prop-types": "15.7.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "sass": "1.29.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sass": "^1.29.0",
+    "swr": "^0.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

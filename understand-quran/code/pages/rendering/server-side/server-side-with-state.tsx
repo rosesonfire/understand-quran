@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { GetServerSideProps } from 'next';
 
 import { Card, CardItem } from '@components';
-import { getKeyPressHandler } from '@utils/react-utils';
+import { ChangeHandler } from '@utils/react-utils';
 
 type Props = {
   headers: string[],
@@ -13,7 +13,7 @@ type Props = {
 const ServerSideWithState: FC<Props> = ({ headers, serverTime }) => {
   const [name, setName] = useState('<name>');
 
-  const onChange = getKeyPressHandler(setName);
+  const onChange = ChangeHandler.getKeyPressHandler(setName);
 
   return (
     <Card>
