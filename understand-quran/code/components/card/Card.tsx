@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card as MaterialCard,
@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 
 type Props = {
-  children: ReactElement | ReactElement[],
+  children: ReactNode,
 };
 
 /**
@@ -31,10 +31,7 @@ const Card: FC<Props> = ({ children }) => (
 );
 
 Card.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element.isRequired),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Card;

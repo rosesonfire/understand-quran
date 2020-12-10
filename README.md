@@ -81,6 +81,7 @@ Helps understanding the Holy Qur'an
     - Automatically rendered as static HTML
     - Automatically generated as static HTML + JSON
     - Incremental static regeneration
+    - Client side rendering
 1. Docker
 1. Docker Compose
 1. Stylelint
@@ -91,6 +92,7 @@ Helps understanding the Holy Qur'an
 1. Webpack
 1. Verdaccio (private npm registry)
 1. NPM (for creating, publishing and reusing private packages)
+1. SWR (React Hooks library for data fetching)
 
 ## Conventions
 1. SuiteCSS

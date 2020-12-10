@@ -1,6 +1,9 @@
-import { ChangeEventHandler } from 'react';
+// eslint-disable-next-line max-classes-per-file
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { GridSize, GridTypeMap } from '@material-ui/core/Grid';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import useSWR from 'swr';
+import axios from 'axios';
 
 type RequiredPropNames<Props> = {
   [K in keyof Props]: undefined extends Props[K] ? undefined : K;
@@ -22,13 +25,41 @@ export const buildGridSizes = (
   lg, md, sm, xl, xs,
 });
 
-export const getKeyPressHandler: (
-  cb: (value: string) => void,
-) => ChangeEventHandler<HTMLInputElement> = (
-  cb: (value: string) => void,
-) => (event) => {
-  event.stopPropagation();
-  event.preventDefault();
+export class ChangeHandler {
+  static getClickHandler = (
+    cb: () => void,
+  ): MouseEventHandler => (event) => {
+    event.stopPropagation();
 
-  cb(event.target.value);
+    cb();
+  };
+
+  static getKeyPressHandler = (
+    cb: (value: string) => void,
+  ): ChangeEventHandler<HTMLInputElement> => (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    cb(event.target.value);
+  };
+}
+
+type APIResponse<Data, Error> = {
+  data: Data | undefined,
+  error: Error | undefined,
 };
+
+type APIError = {};
+
+const fetcher = (url: string) => axios.get(url).then(res => res.data);
+
+export class API {
+  static get<Data>(url: string): APIResponse<Data, APIError> {
+    const { data, error } = useSWR<Data, APIError>(url, fetcher);
+
+    return {
+      data,
+      error,
+    };
+  }
+}

@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
 
 import { Card, CardItem } from '@components';
-import { getKeyPressHandler } from '@utils/react-utils';
+import { ChangeHandler } from '@utils/react-utils';
 
 const StaticWithState: FC = () => {
   const [name, setName] = useState('<name>');
 
-  const onChange = getKeyPressHandler(setName);
+  const onChange = ChangeHandler.getKeyPressHandler(setName);
 
   return (
     <Card>

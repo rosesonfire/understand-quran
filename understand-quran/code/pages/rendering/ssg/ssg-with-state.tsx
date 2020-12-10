@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import PropTypes from 'prop-types';
 
 import { Card, CardItem } from '@components';
-import { getKeyPressHandler } from '@utils/react-utils';
+import { ChangeHandler } from '@utils/react-utils';
 
 type Props = {
   value1: string,
@@ -13,7 +13,7 @@ type Props = {
 const SSGWithState: FC<Props> = ({ value1, value2 }) => {
   const [name, setName] = useState('<name>');
 
-  const onChange = getKeyPressHandler(setName);
+  const onChange = ChangeHandler.getKeyPressHandler(setName);
 
   return (
     <Card>
