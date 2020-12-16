@@ -1,9 +1,10 @@
-// eslint-disable-next-line max-classes-per-file
+/* eslint-disable max-classes-per-file */
+
+import useSWR from 'swr';
+import axios from 'axios';
 import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { GridSize, GridTypeMap } from '@material-ui/core/Grid';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
-import useSWR from 'swr';
-import axios from 'axios';
 
 type RequiredPropNames<Props> = {
   [K in keyof Props]: undefined extends Props[K] ? undefined : K;
@@ -44,6 +45,8 @@ export class ChangeHandler {
   };
 }
 
+// HTTP API
+
 type APIResponse<Data, Error> = {
   data: Data | undefined,
   error: Error | undefined,
@@ -51,11 +54,11 @@ type APIResponse<Data, Error> = {
 
 type APIError = {};
 
-const fetcher = (url: string) => axios.get(url).then(res => res.data);
+const httpFetcher = (url: string) => axios.get(url).then(res => res.data);
 
-export class API {
+export class HTTPAPI {
   static get<Data>(url: string): APIResponse<Data, APIError> {
-    const { data, error } = useSWR<Data, APIError>(url, fetcher);
+    const { data, error } = useSWR<Data, APIError>(url, httpFetcher);
 
     return {
       data,

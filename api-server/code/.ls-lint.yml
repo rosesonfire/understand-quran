@@ -1,0 +1,22 @@
+ls: 
+  .tsx: PascalCase | kebabcase
+  .scss: camelCase
+  .module.scss: camelCase
+  .js: regex:^$
+  .jsx: regex:^$
+  .html: regex:^$
+  .css: regex:^$
+
+ignore:
+  - ./node_modules
+  - ./.eslintrc.js
+  - ./.next
+  - ./next.config.js
+  - ./pages/_app.tsx
+  - ./pages/index.tsx
+  - ./storybook-static
+  - ./dist
+  - ./webpack.common.js
+  - ./webpack.dev.js
+  - ./webpack.production.js
+  - ./webpack.config.js

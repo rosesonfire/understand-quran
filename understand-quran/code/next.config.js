@@ -6,6 +6,7 @@ module.exports = {
     config.resolve.alias['@utils'] = path.resolve(__dirname, 'utils/');
     config.resolve.alias['@styles'] = path.resolve(__dirname, 'styles/');
     config.resolve.alias['@copies'] = path.resolve(__dirname, 'copies/');
+    config.resolve.alias['@config'] = path.resolve(__dirname, 'config/');
 
     return config
   },

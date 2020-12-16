@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Card, CardItem } from '@components';
-import { API } from '@utils/react-utils';
+import { HTTPAPI } from '@utils/react-utils';
 
 type Posts = {
   id: string,
@@ -9,8 +9,8 @@ type Posts = {
 };
 
 const ClientSideWithoutState: FC = () => {
-  const { data: posts } = API.get<Posts[]>('/api/posts');
-  const { error } = API.get<Posts[]>('/api/wrong-url');
+  const { data: posts } = HTTPAPI.get<Posts[]>('/api/posts');
+  const { error } = HTTPAPI.get<Posts[]>('/api/wrong-url');
 
   return (
     <Card>

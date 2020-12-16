@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -x
+set -e
+
+npm_registry=http://npm-registry:4873
+design_library=@uq/design-library
+
+# Wait till 'npm-registry' container is up
+while ! curl $npm_registry 1> /dev/null
+do
+  echo "$(date) - waiting for npm-registry ..."
+  sleep 1
+done
+
+# Set working directory
+cd /code
+
+yarn remove $design_library
+
+# Wait till the '@uq/*' private npm packages are available in the 'npm-registry' container
+while ! yarn add $design_library --registry $npm_registry
+do
+  echo "$(date) - design library package is not available yet. Need to run the 'design-library' container at least once ..."
+  sleep 1
+done
+
+# Upgrade the '@uq/*' private npm packages
+# yarn upgrade --scope @uq --registry $npm_registry
