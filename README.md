@@ -84,7 +84,7 @@ Helps understanding the Holy Qur'an
 # Tech used
 
 ## Languages
-1. Javascript
+1. [hello](icons/javascript.svg) Javascript
 1. Typescript
 1. Shell script
 1. CSS
