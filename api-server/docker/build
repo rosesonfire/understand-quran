@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -x
+set -e
+
+# Print the current environment (production or dev)
+echo "env = $ENV"
+
+# Set working directory
+cd /code
+
+yarn install
+
+# If environment is 'production' build the project.
+# If environment is 'dev' run the project in 'dev' mode
+if [ "$ENV" = "production" ]
+then
+  echo "Starting in 'production' mode ..."
+
+  while ! (yarn run lint && yarn run build && yarn start)
+  do
+    echo "$(date) - restarting server ..."
+    sleep 1
+  done
+else
+  echo "Starting in 'dev' mode ..."
+
+  while ! (yarn run lint && yarn dev)
+  do
+    echo "$(date) - restarting server ..."
+    sleep 1
+  done
+fi

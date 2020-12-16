@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -x
+set -e
+
+# Print the current environment (production or dev)
+echo "env = $ENV"
+
+npm_registry=http://npm-registry:4873
+design_library=@uq/design-library
+
+# Wait till 'npm-registry' container is up
+while ! curl $npm_registry
+do
+  echo "$(date) - waiting for npm-registry ..."
+  sleep 1
+done
+
+# Set working directory
+cd /code
+
+# Wait till the '@uq/*' private npm packages are available in the 'npm-registry' container
+while ! yarn install --registry $npm_registry
+do
+  echo "$(date) - all npm packages not available yet. Need to run the 'design-library' container at least once ..."
+  sleep 1
+done
+
+/reinstall-design-library
+
+# If environment is 'production' build the project.
+# If environment is 'dev' run the project in 'dev' mode
+if [ "$ENV" = "production" ]
+then
+  echo "Starting in 'production' mode ..."
+
+  while ! (yarn run lint && yarn run build && yarn start)
+  do
+    echo "$(date) - restarting server ..."
+    sleep 1
+  done
+else
+  echo "Starting in 'dev' mode ..."
+
+  while ! (yarn run lint && yarn run dev)
+  do
+    echo "$(date) - restarting server ..."
+    sleep 1
+  done
+fi

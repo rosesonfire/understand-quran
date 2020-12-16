@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "incremental": false,
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
@@ -23,6 +24,7 @@
         "@utils/*": ["utils/*"],
         "@styles/*": ["styles/*"],
         "@copies/*": ["copies/*"],
+        "@config/*": ["config/*"],
     }
   },
   "exclude": ["node_modules"],

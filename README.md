@@ -37,8 +37,13 @@ Helps understanding the Holy Qur'an
 ```
 
 ## Shell into services
+### npm-registry
 ```bash
-./shell-<service name>
+./shell-npm-registry
+```
+### other services
+```bash
+./shell <service name>
 ```
 
 ## Debug
@@ -46,21 +51,35 @@ Helps understanding the Holy Qur'an
 - Client side code: Use `debugger`
 - Server side code: Add `debugger` to server side code. 
   - Chrome: Go to `chrome://inspect/ -> Under "Remote Targets" click on "inspect"`
-  - VSCode: Add this debugger configuration and lauch after starting server:
-    ```
-    {
-      "version": "0.2.0",
-      "configurations": [
+  - VSCode:
+    1. Add this task in `.vscode/tasks.json`:
+        ```json
         {
-          "type": "node",
-          "request": "attach",
-          "name": "Launch Program",
-          "skipFiles": ["<node_internals>/**"],
-          "port": 9229
+          "version": "2.0.0",
+          "tasks": [
+            {
+              "label": "clear-editor-history",
+              "command": "${command:workbench.action.clearEditorHistory}"
+            }
+          ]
         }
-      ]
-    }
-    ```
+        ```
+    1. Add this debugger configuration in `.vscode/launch.json` and lauch after starting server:
+        ```json
+        {
+          "version": "0.2.0",
+          "configurations": [
+            {
+              "type": "node",
+              "request": "attach",
+              "name": "Launch Program",
+              "skipFiles": ["<node_internals>/**"],
+              "port": 9229,
+              "preLaunchTask": "clear-editor-history"
+            }
+          ]
+        }
+        ```
 
 # Tech used
 
@@ -88,11 +107,13 @@ Helps understanding the Holy Qur'an
 1. Eslint
 1. Storybook
 1. Material UI
-1. Babel
 1. Webpack
 1. Verdaccio (private npm registry)
 1. NPM (for creating, publishing and reusing private packages)
 1. SWR (React Hooks library for data fetching)
+1. GraphQL
+1. Apollo server express
+1. Apollo client
 
 ## Conventions
 1. SuiteCSS

@@ -5,23 +5,23 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect=0.0.0.0:9229' next dev",
     "build": "next build",
-    "start": "yarn run build && next start --port 4000",
+    "start": "yarn run build && next start --port 5000",
     "type-check": "tsc",
     "style-lint": "stylelint \"**/*.css\" \"**/*.scss\"",
     "code-lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "filename-lint": "ls-lint",
     "lint": "yarn run filename-lint && yarn run code-lint && yarn run style-lint",
-    "print-eslint-config": "eslint --print-config ./pages/_app.tsx",
-    "start-storybook": "start-storybook -p 6006",
-    "build-stories": "build-storybook"
+    "print-eslint-config": "eslint --print-config ./pages/_app.tsx"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.6",
     "@material-ui/core": "^4.11.0",
-    "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@uq/design-library": "^0.1.0",
     "axios": "^0.21.0",
     "classnames": "^2.2.6",
+    "graphql": "^15.4.0",
     "next": "^10.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
