@@ -57,9 +57,9 @@ Helps understanding the Holy Qur'an
 ./restart <service name>
 ```
 
-## Stop all services
+## Stop all services and remove containers
 ```bash
-./stop
+./killall
 ```
 
 ## URLs
