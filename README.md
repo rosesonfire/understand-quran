@@ -47,19 +47,19 @@ Helps understanding the Holy Qur'an
 - design-library: a design library for the front end
 - npm-registry: private npm registry
 
-## Run all services
+## Run services
 ```bash
-./start
-```
-
-## Stop all services
-```bash
-./stop
+./start [<service name>]
 ```
 
 ## Restart services
 ```bash
 ./restart <service name>
+```
+
+## Stop all services
+```bash
+./stop
 ```
 
 ## URLs
