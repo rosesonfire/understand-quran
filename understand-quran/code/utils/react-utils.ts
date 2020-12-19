@@ -2,9 +2,15 @@
 
 import useSWR from 'swr';
 import axios from 'axios';
-import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { GridSize, GridTypeMap } from '@material-ui/core/Grid';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
 
 type RequiredPropNames<Props> = {
   [K in keyof Props]: undefined extends Props[K] ? undefined : K;
@@ -35,9 +41,20 @@ export class ChangeHandler {
     cb();
   };
 
+  static getKeyDownHandler = (
+    cb: (key: string) => void,
+  ): KeyboardEventHandler<HTMLElement> => (
+    event: KeyboardEvent<HTMLElement>,
+  ) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    cb(event.key);
+  };
+
   static getKeyPressHandler = (
     cb: (value: string) => void,
-  ): ChangeEventHandler<HTMLInputElement> => (event) => {
+  ): ChangeEventHandler<HTMLInputElement> => (event: ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
     event.preventDefault();
 

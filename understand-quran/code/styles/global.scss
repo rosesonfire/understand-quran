@@ -1,3 +1,5 @@
+@import '~styles/colors';
+
 html,
 body {
   font-family:
@@ -16,6 +18,10 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
+
+  :focus {
+    outline: none;
+  }
 }
 
 * {
@@ -77,4 +83,12 @@ code {
     DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   font-size: 1.1rem;
   padding: 0.75rem;
+}
+
+:root {
+  --app-background-color: #{$white};
+}
+
+.uq-App {
+  background-color: var(--app-background-color);
 }

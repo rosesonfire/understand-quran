@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 while true
 do
   docker-compose logs -f --tail 100 $1

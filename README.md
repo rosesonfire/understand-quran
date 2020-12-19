@@ -38,6 +38,10 @@ Helps understanding the Holy Qur'an
 ## Conventions
 1. SuiteCSS
 
+## Follow this development on YouTube
+Playlist: https://www.youtube.com/playlist?list=PLLGMgjCzF9LYuY0tqOUeSONWamN5jkrwo
+
+
 # Requirements
 1. Docker
 1. Docker Compose
