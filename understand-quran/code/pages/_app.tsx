@@ -24,7 +24,9 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     </Head>
 
-    <div className="container">
+    <div className="uq-Modals-container" />
+
+    <div className="uq-App">
       <main>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />

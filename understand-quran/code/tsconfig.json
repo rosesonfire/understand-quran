@@ -21,10 +21,12 @@
     "baseUrl": ".",
     "paths": {
         "@components": ["components"],
+        "@components/*": ["components/*"],
         "@utils/*": ["utils/*"],
         "@styles/*": ["styles/*"],
         "@copies/*": ["copies/*"],
         "@config/*": ["config/*"],
+        "@hooks": ["hooks"],
     }
   },
   "exclude": ["node_modules"],

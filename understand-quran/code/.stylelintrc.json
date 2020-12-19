@@ -2,11 +2,12 @@
   "extends": "stylelint-config-sass-guidelines",
   "rules": {
     "selector-class-pattern": [
-      "^uq-([A-Z][a-z]*)+((-[a-z]+([A-Z][a-z]*)*)*|(--[a-z]+([A-Z][a-z]*)*)|\\.(is|has)-[a-z]+([A-Z][a-z]*)*)$",
+      "^(uq-([A-Z][a-z]*)+((-[a-z]+([A-Z][a-z]*)*)*|(--[a-z]+([A-Z][a-z]*)*)))|((is|has)-[a-z]+([A-Z][a-z]*)*)$",
       {
         "resolveNestedSelectors": true
       }
     ],
-    "selector-max-class": 1
+    "selector-max-class": 3,
+    "max-nesting-depth": 2
   }
 }
