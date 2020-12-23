@@ -23,6 +23,14 @@ const Index: FC = () => (
       <code>pages/index.js</code>
     </Typography>
 
+    <Typography variant="h3">
+      <Link href="/testing-redux/item-list">
+        <MaterialLink href="/testing-redux/item-list">
+          Test redux
+        </MaterialLink>
+      </Link>
+    </Typography>
+
     <PageLinks />
   </>
 );

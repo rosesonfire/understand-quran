@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
+import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import '@styles/global.scss';
 import { siteDescription, siteTitle } from '@copies/global';
+import store from '@redux/store';
 
 // eslint-disable-next-line react/prop-types
 const App: FC<AppProps> = ({ Component, pageProps }) => (
@@ -28,8 +30,10 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
 
     <div className="uq-App">
       <main>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
+        <Provider store={store}>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </Provider>
       </main>
     </div>
 

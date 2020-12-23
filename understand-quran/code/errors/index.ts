@@ -1,0 +1,30 @@
+/* eslint-disable max-classes-per-file */
+import { Environment } from '@constants';
+
+export class UQError extends Error {
+  constructor(code: number, message?: string, debugMessage?: string) {
+    super(`Error code: ${code}. ${message}. ${process.env[Environment.dev] ? debugMessage : ''}`);
+  }
+}
+
+export enum ErrorType {
+  OBJECT_NOT_INITIALIZED = 1,
+  OBJECT_NOT_FOUND = 2,
+  ARRAY_IS_EMPTY = 3,
+  SHOULD_NOT_REACH_CODE = 4,
+  OBJECT_ALREADY_EXISTS = 5,
+}
+
+export class ErrorFactory {
+  static createError = (type: ErrorType, message?: string, debugMessage?: string): UQError => {
+    const error = new UQError(type, message, debugMessage);
+
+    return error;
+  };
+
+  static throwError = (type: ErrorType, message?: string, debugMessage?: string) => {
+    const error = new UQError(type, message, debugMessage);
+
+    throw error;
+  };
+}
