@@ -27,6 +27,10 @@
         "@copies/*": ["copies/*"],
         "@config/*": ["config/*"],
         "@hooks": ["hooks"],
+        "@redux/*": ["redux/*"],
+        "@uqTypes/*": ["types/*"],
+        "@errors": ["errors"],
+        "@constants": ["constants"],
     }
   },
   "exclude": ["node_modules"],

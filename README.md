@@ -61,6 +61,11 @@ Playlist: https://www.youtube.com/playlist?list=PLLGMgjCzF9LYuY0tqOUeSONWamN5jkr
 ./restart <service name>
 ```
 
+## Stop a service
+```bash
+./stop $1
+```
+
 ## Stop all services and remove containers
 ```bash
 ./killall

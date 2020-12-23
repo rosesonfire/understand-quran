@@ -8,6 +8,10 @@ module.exports = {
     config.resolve.alias['@copies'] = path.resolve(__dirname, 'copies/');
     config.resolve.alias['@config'] = path.resolve(__dirname, 'config/');
     config.resolve.alias['@hooks'] = path.resolve(__dirname, 'hooks/');
+    config.resolve.alias['@redux'] = path.resolve(__dirname, 'redux/');
+    config.resolve.alias['@uqTypes'] = path.resolve(__dirname, 'types/');
+    config.resolve.alias['@errors'] = path.resolve(__dirname, 'errors/');
+    config.resolve.alias['@constants'] = path.resolve(__dirname, 'constants/');
 
     return config
   },
