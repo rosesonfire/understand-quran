@@ -21,7 +21,7 @@ const typeDefs = gql`
   }
 `;
 
-const graphQLClient = new ApolloClient({
+const client = new ApolloClient({
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -32,8 +32,6 @@ const graphQLClient = new ApolloClient({
   uri: `${apiServer.url}${apiServer.endpoints.graphql}`,
 });
 
-export default class GraphQLAPI {
-  static get(query: any) {
-    return graphQLClient.query({ query });
-  }
+export default class GraphQLClient {
+  static get = <T>(query: any) => client.query<T>({ query });
 }

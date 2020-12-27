@@ -2,17 +2,14 @@ import React, { FC, useState } from 'react';
 import { Button } from '@material-ui/core';
 
 import { Card, CardItem } from '@components';
-import { ChangeHandler, HTTPAPI } from '@utils/react-utils';
-
-type Posts = {
-  id: string,
-  title: string,
-};
+import { ChangeHandler } from '@utils/react-utils';
+import { useSWRWithHTTP } from '@hooks';
+import { Post } from '@uqTypes/business/post';
 
 const ClientSideWithState: FC = () => {
   const [clickCount, setClickCount] = useState(0);
-  const { data: posts } = HTTPAPI.get<Posts[]>('/api/posts');
-  const { error } = HTTPAPI.get<Posts[]>('/api/wrong-url');
+  const { data: posts } = useSWRWithHTTP<Post[]>('/api/posts');
+  const { error } = useSWRWithHTTP<Post[]>('/api/wrong-url');
 
   const handleClick = ChangeHandler.getClickHandler(() => setClickCount(clickCount + 1));
 

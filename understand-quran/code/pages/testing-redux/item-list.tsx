@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { /* batch , */useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Skeleton } from '@material-ui/lab';
 import {
@@ -17,7 +17,7 @@ import itemListSelectors from '@redux/selectors/itemList';
 import { State } from '@redux/reducers';
 import { ItemListActionFactory } from '@redux/actions/itemList';
 
-// import { ChangeHandler, HTTPAPI } from '@utils/react-utils';
+// import { ChangeHandler } from '@utils/react-utils';
 import styles from './itemList.module.scss';
 
 const ItemList: FC = () => {
@@ -36,59 +36,29 @@ const ItemList: FC = () => {
     : { items: null };
 
   useEffect(() => {
-    batch(() => {
-      dispatch(ItemListActionFactory.initializeItemList([
-        {
-          category: 'food',
-          id: '4984',
-          name: 'Egg',
-          price: '$1 per dozen',
-        },
-        {
-          category: 'toy',
-          id: '9689',
-          name: 'Football',
-          price: '$10',
-        },
-        {
-          category: 'food',
-          id: '4586',
-          name: 'Cake',
-          price: '$2 per pound',
-        },
-      ]));
+    dispatch(ItemListActionFactory.initializeItemList());
 
-      dispatch(ItemListActionFactory.addToItemList(
-        {
-          category: 'furniture',
-          id: '8524',
-          name: 'Chair',
-          price: '$20',
-        },
-      ));
-    });
+    // Use Redux observables for this
+    // batch(() => {
+    //   dispatch(ItemListActionFactory.addToItemList(
+    //     {
+    //       category: 'furniture',
+    //       id: '8524',
+    //       name: 'Chair',
+    //       price: '$20',
+    //     },
+    //   ));
+
+    //   dispatch(ItemListActionFactory.addToItemList(
+    //     {
+    //       category: 'electronics',
+    //       id: '7891',
+    //       name: 'Keyboard',
+    //       price: '$100',
+    //     },
+    //   ));
+    // });
   }, []);
-
-  // const items: Item[] = [
-  //   {
-  //     category: 'Food',
-  //     id: '1',
-  //     name: 'Eggs',
-  //     price: '$1 per dozen',
-  //   },
-  //   {
-  //     category: 'Sports',
-  //     id: '2',
-  //     name: 'Football',
-  //     price: '$10',
-  //   },
-  //   {
-  //     category: 'Food',
-  //     id: '3',
-  //     name: 'Spinach',
-  //     price: '$0.5 per kg',
-  //   },
-  // ];
 
   return (
     <div className={styles['uq-ItemList']}>
@@ -104,7 +74,12 @@ const ItemList: FC = () => {
           </TableHead>
           <TableBody>
             {items ? (
-              items.map(({ category, id, name, price }) => (
+              items.map(({
+                category,
+                id,
+                name,
+                price,
+              }) => (
                 <TableRow key={id}>
                   <TableCell align="center">
                     {id}

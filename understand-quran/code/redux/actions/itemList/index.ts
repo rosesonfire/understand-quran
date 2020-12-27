@@ -1,6 +1,7 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Item, ItemId } from '@uqTypes/business/item';
+import { httpFetcher } from '@utils/http';
 
 export enum ItemListActionType {
   LIST_ITEMS_INITIALIZED = 'LIST_ITEMS_INITIALIZED',
@@ -26,12 +27,10 @@ export class ItemListActionFactory {
     }),
   );
 
-  static initializeItemList = createAction(
+  static initializeItemList = createAsyncThunk(
     ItemListActionType.LIST_ITEMS_INITIALIZED,
-    (items: Item[]) => ({
-      payload: {
-        items,
-      },
+    async () => ({
+      items: await httpFetcher<Item[]>('/api/items'),
     }),
   );
 
