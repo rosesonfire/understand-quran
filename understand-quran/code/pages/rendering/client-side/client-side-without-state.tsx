@@ -1,16 +1,12 @@
 import React, { FC } from 'react';
 
 import { Card, CardItem } from '@components';
-import { HTTPAPI } from '@utils/react-utils';
-
-type Posts = {
-  id: string,
-  title: string,
-};
+import { useSWRWithHTTP } from '@hooks';
+import { Post } from '@uqTypes/business/post';
 
 const ClientSideWithoutState: FC = () => {
-  const { data: posts } = HTTPAPI.get<Posts[]>('/api/posts');
-  const { error } = HTTPAPI.get<Posts[]>('/api/wrong-url');
+  const { data: posts } = useSWRWithHTTP<Post[]>('/api/posts');
+  const { error } = useSWRWithHTTP<Post[]>('/api/wrong-url');
 
   return (
     <Card>

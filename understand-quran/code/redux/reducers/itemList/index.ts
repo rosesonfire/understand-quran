@@ -74,7 +74,7 @@ const itemListReducer = createReducer<ItemListState>(
   INITIAL_STATE,
   builder => builder
     .addCase(
-      ItemListActionFactory.initializeItemList,
+      ItemListActionFactory.initializeItemList.fulfilled,
       (_state, { payload: { items } }) => initializeItemList(items),
     )
     .addCase(

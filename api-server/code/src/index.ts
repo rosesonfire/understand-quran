@@ -1,21 +1,48 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
- 
-// Construct a schema, using GraphQL schema language
+
 const typeDefs = gql`
+ type Item {
+    category: String!
+    id: ID!
+    name: String!
+    price: String!
+  }
+
   type Post {
     id: ID!
     title: String!
   }
 
   type Query {
+    items: [Item]
     posts: [Post]
   }
 `;
- 
-// Provide resolver functions for your schema fields
+
 const resolvers = {
   Query: {
+    items: () => [
+      {
+        category: 'food',
+        id: '4984',
+        name: 'Egg',
+        price: '$1 per dozen',
+      },
+      {
+        category: 'toy',
+        id: '9689',
+        name: 'Football',
+        price: '$10',
+      },
+      {
+        category: 'food',
+        id: '4586',
+        name: 'Cake',
+        price: '$2 per pound',
+      },
+    ],
+
     posts: () => [
       {
         id: 1,
@@ -28,12 +55,12 @@ const resolvers = {
     ],
   },
 };
- 
+
 const server = new ApolloServer({ resolvers, typeDefs });
- 
+
 const app = express();
 server.applyMiddleware({ app });
- 
+
 app.listen({ port: 4000 }, () =>
   // eslint-disable-next-line no-console
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)

@@ -1,7 +1,5 @@
 /* eslint-disable max-classes-per-file */
 
-import useSWR from 'swr';
-import axios from 'axios';
 import { GridSize, GridTypeMap } from '@material-ui/core/Grid';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import {
@@ -60,26 +58,4 @@ export class ChangeHandler {
 
     cb(event.target.value);
   };
-}
-
-// HTTP API
-
-type APIResponse<Data, Error> = {
-  data: Data | undefined,
-  error: Error | undefined,
-};
-
-type APIError = {};
-
-const httpFetcher = (url: string) => axios.get(url).then(res => res.data);
-
-export class HTTPAPI {
-  static get<Data>(url: string): APIResponse<Data, APIError> {
-    const { data, error } = useSWR<Data, APIError>(url, httpFetcher);
-
-    return {
-      data,
-      error,
-    };
-  }
 }

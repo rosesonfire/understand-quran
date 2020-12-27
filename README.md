@@ -21,6 +21,12 @@ Helps understanding the Holy Qur'an
     - Automatically generated as static HTML + JSON
     - Incremental static regeneration
     - Client side rendering
+1. <img src="icons/redux.svg" height="16"/> Redux
+    - Thunk
+    - Reselect
+    - Re-reselect
+    - React Redux
+    - Redux Toolkit
 1. <img src="icons/docker.jpeg" height="16"/> Docker
 1. <img src="icons/docker_compose.png" height="16"/> Docker Compose
 1. <img src="icons/stylelint.png" height="16"/> Stylelint

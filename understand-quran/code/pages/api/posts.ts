@@ -1,16 +1,17 @@
 import { NextApiHandler } from 'next';
 import { gql } from '@apollo/client';
 
-import GraphQLAPI from '@utils/graphql';
+import { Post } from '@uqTypes/business/post';
+import GraphQLClient from '@utils/graphql';
 
 const METHODS = {
   GET: 'GET',
 };
 
-export default (async (req, res) => {
+const handler: NextApiHandler<Post[]> = (async (req, res) => {
   if (req.method === METHODS.GET) {
-    const { data: { posts } } = await GraphQLAPI.get(gql`
-    {
+    const { data: { posts } } = await GraphQLClient.get<{ posts: Post[] }>(gql`
+      {
         posts {
           id
           title
@@ -20,4 +21,6 @@ export default (async (req, res) => {
 
     res.status(200).json(posts);
   }
-}) as NextApiHandler;
+});
+
+export default handler;
