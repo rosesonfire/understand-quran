@@ -2,10 +2,15 @@ import { createStructuredSelector } from 'reselect';
 
 import { State } from '@redux/reducers';
 
-import cartSelector from './cart';
-import itemListSelector from './itemList';
+import cartSelectors, { CartSelectorResult } from './cart';
+import itemListSelectors, { ItemsListResult } from './itemList';
 
-export default createStructuredSelector<State, State>({
-  cart: cartSelector,
-  itemList: itemListSelector,
+type SelectorResult = {
+  cart: CartSelectorResult,
+  itemList: ItemsListResult,
+};
+
+export default createStructuredSelector<State, SelectorResult>({
+  cart: ({ cart }) => cartSelectors(cart),
+  itemList: ({ itemList }) => itemListSelectors(itemList),
 });

@@ -1,146 +1,90 @@
-import { Reducer } from '@uqTypes/application/redux';
-import { ItemId } from '@uqTypes/business/item';
-import ItemListActions, { ItemListActionType } from '@redux/actions/itemList';
+import { createReducer } from '@reduxjs/toolkit';
+
+import { Item, ItemId } from '@uqTypes/business/item';
+import { ItemListActionFactory } from '@redux/actions/itemList';
 import { ErrorType, ErrorFactory } from '@errors';
 
-enum ItemListOperation {
-  ADD,
-  REMOVE,
-}
-
 export type ItemListState = {
-  itemIds: ItemId[] | null,
+  items: Item[] | null,
 };
 
 const INITIAL_STATE: ItemListState = {
-  itemIds: null,
+  items: null,
 };
 
-const createItemNotInItemListError = (itemIds: ItemId[]) => ErrorFactory.createError(
+const createItemListNotInitializedError = () => ErrorFactory.createError(
+  ErrorType.OBJECT_NOT_INITIALIZED,
+  'Item list has not yet been initialized',
+);
+
+const createItemNotInItemListError = (items: Item[]) => ErrorFactory.createError(
   ErrorType.OBJECT_NOT_FOUND,
   'Item is not in item list',
-  `Item list: ${JSON.stringify(itemIds)}`,
+  `Item list: ${JSON.stringify(items)}`,
 );
 
-const createItemAlreadyInItemListError = (itemIds: ItemId[]) => ErrorFactory.createError(
+const createItemAlreadyInItemListError = (items: Item[]) => ErrorFactory.createError(
   ErrorType.OBJECT_ALREADY_EXISTS,
   'Item is already in item list',
-  `Item list: ${JSON.stringify(itemIds)}`,
+  `Item list: ${JSON.stringify(items)}`,
 );
 
-const createUnknownItemListOperationError = (
-  operation: ItemListOperation,
-) => ErrorFactory.createError(
-  ErrorType.SHOULD_NOT_REACH_CODE,
-  'Unknown item list operation',
-  `Item list operation: ${operation}`,
-);
+const safelyUpdateState = (
+  getUpdatedItemList: (items: Item[], itemIndex: number) => Item[],
+) => (state: ItemListState, itemId: ItemId) => {
+  const { items } = state;
 
-const getNewItemList = (
-  itemId: ItemId,
-  operation: ItemListOperation,
-  itemList: ItemId[],
-): ItemId[] => {
-  let newItemList: ItemId[];
-  const itemIndex = itemList.indexOf(itemId);
-
-  if (itemIndex > -1) {
-    switch (operation) {
-      case ItemListOperation.ADD:
-
-        throw createItemAlreadyInItemListError(itemList);
-
-      case ItemListOperation.REMOVE:
-
-        newItemList = itemList.slice(0, itemIndex).concat(itemList.slice(itemIndex + 1));
-
-        break;
-
-      default:
-
-        throw createUnknownItemListOperationError(operation);
-    }
-  } else {
-    switch (operation) {
-      case ItemListOperation.ADD:
-
-        newItemList = itemList.concat(itemId);
-
-        break;
-
-      case ItemListOperation.REMOVE:
-
-        throw createItemNotInItemListError(itemList);
-
-      default:
-
-        throw createUnknownItemListOperationError(operation);
-    }
+  if (!items) {
+    throw createItemListNotInitializedError();
   }
 
-  return newItemList;
+  const itemIndex = items.map(({ id }) => id).indexOf(itemId);
+
+  return {
+    ...state,
+    items: getUpdatedItemList(items, itemIndex),
+  };
 };
 
-const safelyUpdateItemList = (
+const safelyAddToItemList = (
+  state: ItemListState,
+  item: Item,
+): ItemListState => safelyUpdateState((items, itemIndex) => {
+  if (itemIndex > -1) {
+    throw createItemAlreadyInItemListError(items);
+  }
+
+  return items.concat(item);
+})(state, item.id);
+
+const safelyRemoveFromItemList = (
   state: ItemListState,
   itemId: ItemId,
-  operation: ItemListOperation,
-): ItemListState => {
-  const { itemIds } = state;
-
-  if (!itemIds) {
-    throw ErrorFactory.createError(
-      ErrorType.OBJECT_NOT_INITIALIZED,
-      'Item list has not yet been initialized',
-      `Item list: ${JSON.stringify(itemIds)}`,
-    );
+): ItemListState => safelyUpdateState((items, itemIndex) => {
+  if (itemIndex === -1) {
+    throw createItemNotInItemListError(items);
   }
 
-  const newItemList = getNewItemList(itemId, operation, itemIds);
+  return items.slice(0, itemIndex).concat(items.slice(itemIndex + 1));
+})(state, itemId);
 
-  const newState: ItemListState = {
-    ...state,
-    ...newItemList,
-  };
+const initializeItemList = (items: Item[]): ItemListState => ({ items });
 
-  return newState;
-};
-
-const itemListReducer: Reducer<ItemListState, ItemListActions> = (
-  state,
-  action,
-) => {
-  if (!state) {
-    return INITIAL_STATE;
-  }
-
-  const { payload: { itemId }, type } = action;
-
-  let newState;
-
-  switch (type) {
-    case ItemListActionType.LIST_ITEM_ADDED:
-
-      newState = safelyUpdateItemList(state, itemId, ItemListOperation.ADD);
-
-      break;
-
-    case ItemListActionType.LIST_ITEM_REMOVED:
-
-      newState = safelyUpdateItemList(state, itemId, ItemListOperation.REMOVE);
-
-      break;
-
-    default:
-
-      throw ErrorFactory.createError(
-        ErrorType.SHOULD_NOT_REACH_CODE,
-        'Unknown item list action type',
-        `Item list action: ${type}`,
-      );
-  }
-
-  return newState;
-};
+const itemListReducer = createReducer<ItemListState>(
+  INITIAL_STATE,
+  builder => builder
+    .addCase(
+      ItemListActionFactory.initializeItemList,
+      (_state, { payload: { items } }) => initializeItemList(items),
+    )
+    .addCase(
+      ItemListActionFactory.addToItemList,
+      (state, { payload: { item } }) => safelyAddToItemList(state, item),
+    )
+    .addCase(
+      ItemListActionFactory.removeFromItemList,
+      (state, { payload: { itemId } }) => safelyRemoveFromItemList(state, itemId),
+    ),
+);
 
 export default itemListReducer;

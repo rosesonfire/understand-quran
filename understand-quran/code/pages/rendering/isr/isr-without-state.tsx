@@ -33,8 +33,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => ({
     value1: new Date().toISOString(),
     value2: 'value 2',
   },
-  // revalidate: 10, // seconds
-  revalidate: 1, // seconds
+  revalidate: 10, // seconds
 });
 
 export default ISRWithoutState;

@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
 import { Skeleton } from '@material-ui/lab';
 import {
   Paper,
@@ -13,20 +13,9 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import selector from '@redux/selectors';
-
-// {itemIds.map(({
-//   category,
-//   id,
-//   name,
-//   price,
-// }) => (
-//     <TableRow key={id}>
-//       <TableCell component="th" scope="row">{name}</TableCell>
-//       <TableCell align="right">{price}</TableCell>
-//       <TableCell align="right">{category}</TableCell>
-//     </TableRow>
-//   ))}
+import itemListSelectors from '@redux/selectors/itemList';
+import { State } from '@redux/reducers';
+import { ItemListActionFactory } from '@redux/actions/itemList';
 
 // import { ChangeHandler, HTTPAPI } from '@utils/react-utils';
 import styles from './itemList.module.scss';
@@ -37,9 +26,47 @@ const ItemList: FC = () => {
   // const { error } = HTTPAPI.get<Posts[]>('/api/wrong-url');
 
   // const handleClick = ChangeHandler.getClickHandler(() => setClickCount(clickCount + 1));
-  const { itemList: { itemIds } } = useSelector(selector);
+
+  const dispatch = useDispatch();
+
+  const { items } = typeof window !== undefined
+    ? useSelector<State, ReturnType<typeof itemListSelectors>>(
+      ({ itemList }) => itemListSelectors(itemList),
+    )
+    : { items: null };
 
   useEffect(() => {
+    batch(() => {
+      dispatch(ItemListActionFactory.initializeItemList([
+        {
+          category: 'food',
+          id: '4984',
+          name: 'Egg',
+          price: '$1 per dozen',
+        },
+        {
+          category: 'toy',
+          id: '9689',
+          name: 'Football',
+          price: '$10',
+        },
+        {
+          category: 'food',
+          id: '4586',
+          name: 'Cake',
+          price: '$2 per pound',
+        },
+      ]));
+
+      dispatch(ItemListActionFactory.addToItemList(
+        {
+          category: 'furniture',
+          id: '8524',
+          name: 'Chair',
+          price: '$20',
+        },
+      ));
+    });
   }, []);
 
   // const items: Item[] = [
@@ -69,25 +96,48 @@ const ItemList: FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="right">Category</TableCell>
+              <TableCell align="center">Id</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Category</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {itemIds ? (
-              null
+            {items ? (
+              items.map(({ category, id, name, price }) => (
+                <TableRow key={id}>
+                  <TableCell align="center">
+                    {id}
+                  </TableCell>
+
+                  <TableCell align="center">
+                    {name}
+                  </TableCell>
+
+                  <TableCell align="center">
+                    {price}
+                  </TableCell>
+
+                  <TableCell align="center">
+                    {category}
+                  </TableCell>
+                </TableRow>
+              ))
             ) : (
               <TableRow>
-                <TableCell>
+                <TableCell align="center">
                   <Skeleton />
                 </TableCell>
 
-                <TableCell>
+                <TableCell align="center">
                   <Skeleton />
                 </TableCell>
 
-                <TableCell>
+                <TableCell align="center">
+                  <Skeleton />
+                </TableCell>
+
+                <TableCell align="center">
                   <Skeleton />
                 </TableCell>
               </TableRow>

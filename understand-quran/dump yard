@@ -1,0 +1,121 @@
+// type ActionCreator<T extends string, Payload> = ActionCreatorWithPreparedPayload<
+// [text: string],
+// Payload,
+// T,
+// never,
+// never
+// >;
+
+// type PrepareAction2<Payload> = () => { payload: Payload };
+// type PrepareAction2WithArg<Payload, Args extends [arg: any]> =
+//   (...args: Args) => { payload: Payload };
+
+// type ActionCreator2<T extends string, Payload> =
+//   ActionCreatorWithPreparedPayload<[], Payload, T, never, never>;
+
+// type ActionCreator2WithArg<T extends string, Payload, Args extends [arg: any]> =
+//   ActionCreatorWithPreparedPayload<Args, Payload, T, never, never>;
+
+// function createAction2 <T extends string, Payload>(
+//   type: T,
+//   prepareAction: PrepareAction2<Payload>,
+// ): ActionCreator2<T, Payload>;
+
+// function createAction2 <T extends string, Payload, Args extends [arg: any]>(
+//   type: T,
+//   prepareAction: PrepareAction2WithArg<Payload, Args>,
+// ): ActionCreator2WithArg<T, Payload, Args>;
+
+// function createAction2 <T extends string, Payload, Args extends [arg: any]>(
+//   type: T,
+//   prepareAction: PrepareAction2<Payload> | PrepareAction2WithArg<Payload, Args>,
+// ): ActionCreator2<T, Payload> | ActionCreator2WithArg<T, Payload, Args> {
+//   return createAction(type, prepareAction);
+// }
+
+// const addTodo: ActionCreatorWithPreparedPayload<
+// [itemId: ItemId],
+// ListItemAddedActionPayload,
+// ItemListActionType.LIST_ITEM_ADDED,
+// never,
+// never
+// > = createAction2(
+//   ItemListActionType.LIST_ITEM_ADDED,
+//   (itemIdInput: string) => ({
+//     payload: {
+//       itemId: itemIdInput,
+//     },
+//   }),
+// );
+
+// type X<Arg extends Array<any>> = ActionCreatorWithPreparedPayload<
+// Arg,
+// ListItemAddedActionPayload,
+// ItemListActionType.LIST_ITEM_ADDED,
+// never,
+// never
+// >;
+
+// const addTodo: X<[itemId: ItemId]> = createAction(
+//   ItemListActionType.LIST_ITEM_ADDED,
+//   (itemIdInput: string) => ({
+//     payload: {
+//       itemId: itemIdInput,
+//     },
+//   }),
+// );
+
+// const addTodo: ActionCreatorWithPreparedPayload<
+// [itemId: ItemId],
+// ListItemAddedActionPayload,
+// ItemListActionType.LIST_ITEM_ADDED,
+// never,
+// never
+// > = createAction(
+//   ItemListActionType.LIST_ITEM_ADDED,
+//   (itemIdInput: string) => ({
+//     payload: {
+//       itemId: itemIdInput,
+//     },
+//   }),
+// );
+
+// const x = addTodo();
+
+// type A<T extends (...args: any[]) => any> = {
+//   hello: undefined extends Parameters<T>[3] ? string : number;
+// }['hello'];
+
+// type B = A<(a: string, b: string, c: string) => void>;
+
+// export function useSelector <Selector, S, R>(
+//   selector: Selector,
+// ): R | null;
+
+// export function useSelector <S, R>(
+//   selector: (state: S) => R,
+// ): R | null;
+
+// export function useSelector <S, P, R>(
+//   selector: (state: S, ...selectorProps: P[]) => R,
+//   ...props: P[]
+// ): R | null;
+
+// export function useSelector <S, P, R>(
+//   selector: (state: S, ...selectorProps: P[]) => R,
+//   ...props: P[]
+// ): R | null {
+//   return typeof window === undefined
+//     ? reactUseSelector<S, R>(
+//       (state) => (props ? selector(state, ...props) : selector(state)),
+//     )
+//     : null;
+// }
+// export const useSelector = <State, P, ReturnValueType>(
+//   selector: ParametricSelector<State, P, ReturnValueType>,
+//   props?: P,
+// ): ReturnValueType | null => (
+//     typeof window === undefined
+//       ? reactUseSelector<State, ReturnValueType>((state) => selector(state, props))
+//       : null
+//   );
