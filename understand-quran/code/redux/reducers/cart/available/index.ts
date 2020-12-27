@@ -1,14 +1,9 @@
-import { Reducer } from '@uqTypes/application/redux';
-import { ItemId } from '@uqTypes/business/item';
-import { CartActions, CartActionType } from '@redux/actions/cart';
-import { ItemListActions, ItemListActionType } from '@redux/actions/itemList';
-import { ErrorType, ErrorFactory } from '@errors';
+import { createReducer } from '@reduxjs/toolkit';
 
-enum AvailableCartOperation {
-  ADD,
-  REMOVE,
-  FORCE_REMOVE_ALL,
-}
+import { ItemId } from '@uqTypes/business/item';
+import { CartActionFactory } from '@redux/actions/cart';
+import { ItemListActionFactory } from '@redux/actions/itemList';
+import { ErrorType, ErrorFactory } from '@errors';
 
 type AvailableCartItemCounts = { [itemId: string]: number };
 
@@ -28,150 +23,95 @@ const createItemNotInAvailableCartError = (
   `itemCounts: ${JSON.stringify(itemCounts)}`,
 );
 
-const createUnknownAvailableCartOperationError = (
-  operation: AvailableCartOperation,
-) => ErrorFactory.createError(
-  ErrorType.SHOULD_NOT_REACH_CODE,
-  'Unknown available cart operation',
-  `Available cart operation: ${operation}`,
+const createCartNotInitializedError = () => ErrorFactory.createError(
+  ErrorType.OBJECT_NOT_INITIALIZED,
+  'Available cart items have not yet been initialized',
 );
 
-const getNewItemCount = (
-  itemId: ItemId,
-  operation: AvailableCartOperation,
-  itemCounts: AvailableCartItemCounts,
-): number => {
-  let newItemCount: number;
-
-  if (itemId in itemCounts) {
-    const currentItemCount = itemCounts[itemId];
-
-    switch (operation) {
-      case AvailableCartOperation.ADD:
-
-        newItemCount = currentItemCount + 1;
-
-        break;
-
-      case AvailableCartOperation.REMOVE:
-
-        if (currentItemCount < 1) {
-          throw createItemNotInAvailableCartError(itemCounts);
-        }
-
-        newItemCount = currentItemCount - 1;
-
-        break;
-
-      case AvailableCartOperation.FORCE_REMOVE_ALL:
-
-        newItemCount = 0;
-
-        break;
-
-      default:
-
-        throw createUnknownAvailableCartOperationError(operation);
-    }
-  } else {
-    switch (operation) {
-      case AvailableCartOperation.ADD:
-
-        newItemCount = 1;
-
-        break;
-
-      case AvailableCartOperation.REMOVE:
-
-        throw createItemNotInAvailableCartError(itemCounts);
-
-      case AvailableCartOperation.FORCE_REMOVE_ALL:
-
-        newItemCount = 0;
-
-        break;
-
-      default:
-
-        throw createUnknownAvailableCartOperationError(operation);
-    }
-  }
-
-  return newItemCount;
-};
-
-const safelyUpdateCart = (
-  state: AvailableCartState,
-  itemId: ItemId,
-  operation: AvailableCartOperation,
-): AvailableCartState => {
+const safelyUpdateState = (
+  getUpdatedItemCounts: (itemCounts: AvailableCartItemCounts) => AvailableCartItemCounts,
+) => (state: AvailableCartState) => {
   const { itemCounts } = state;
 
   if (!itemCounts) {
-    throw ErrorFactory.createError(
-      ErrorType.OBJECT_NOT_INITIALIZED,
-      'Available cart items have not yet been initialized',
-      `itemCounts: ${JSON.stringify(itemCounts)}`,
-    );
+    throw createCartNotInitializedError();
   }
 
-  const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
-  const newItemCount = getNewItemCount(itemId, operation, itemCounts);
+  return {
+    ...state,
+    itemCounts: getUpdatedItemCounts(itemCounts),
+  };
+};
 
-  const newItemCounts = newItemCount === 0 ? restItemCounts : {
+const safelyAddToCart = (
+  state: AvailableCartState,
+  itemId: ItemId,
+): AvailableCartState => safelyUpdateState((itemCounts: AvailableCartItemCounts) => {
+  const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
+  const newItemCount = itemId in itemCounts ? currentItemCount + 1 : 1;
+
+  return {
     ...restItemCounts,
     [itemId]: newItemCount,
   };
+})(state);
 
-  const newState: AvailableCartState = {
-    ...state,
-    ...newItemCounts,
-  };
-
-  return newState;
-};
-
-const availableCartReducer: Reducer<AvailableCartState, CartActions | ItemListActions> = (
-  state,
-  action,
+const safelyRemoveFromCart = (
+  state: AvailableCartState,
+  itemId: ItemId,
+): AvailableCartState => safelyUpdateState((
+  itemCounts: AvailableCartItemCounts,
 ) => {
-  if (!state) {
-    return INITIAL_STATE;
+  const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
+
+  let newItemCount: number;
+
+  if (itemId in itemCounts) {
+    if (currentItemCount < 1) {
+      throw createItemNotInAvailableCartError(itemCounts);
+    }
+
+    newItemCount = currentItemCount - 1;
+  } else {
+    throw createItemNotInAvailableCartError(itemCounts);
   }
 
-  let newState;
+  return newItemCount === 0 ? restItemCounts : {
+    ...restItemCounts,
+    [itemId]: newItemCount,
+  };
+})(state);
 
-  const { payload: { itemId }, type } = action;
+const safelyRemoveAllFromCart = (
+  state: AvailableCartState,
+  itemId: ItemId,
+): AvailableCartState => safelyUpdateState((
+  itemCounts: AvailableCartItemCounts,
+) => {
+  const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
 
-  switch (type) {
-    case CartActionType.CART_ITEM_ADDED:
-
-      newState = safelyUpdateCart(state, itemId, AvailableCartOperation.ADD);
-
-      break;
-
-    case CartActionType.CART_ITEM_REMOVED:
-
-      newState = safelyUpdateCart(state, itemId, AvailableCartOperation.REMOVE);
-
-      break;
-
-    case ItemListActionType.LIST_ITEM_REMOVED:
-
-      newState = safelyUpdateCart(state, itemId, AvailableCartOperation.FORCE_REMOVE_ALL);
-
-      break;
-
-    default:
-
-      throw ErrorFactory.createError(
-        ErrorType.SHOULD_NOT_REACH_CODE,
-        'Unknown cart action type',
-        `Cart action: ${type}`,
-      );
+  if (!(itemId in itemCounts) || currentItemCount < 1) {
+    throw createItemNotInAvailableCartError(itemCounts);
   }
 
-  return newState;
-};
+  return restItemCounts;
+})(state);
+
+const availableCartReducer = createReducer<AvailableCartState>(
+  INITIAL_STATE,
+  builder => builder
+    .addCase(
+      CartActionFactory.addToCart,
+      (state, { payload: { itemId } }) => safelyAddToCart(state, itemId),
+    )
+    .addCase(
+      CartActionFactory.removeFromCart,
+      (state, { payload: { itemId } }) => safelyRemoveFromCart(state, itemId),
+    )
+    .addCase(
+      ItemListActionFactory.removeFromItemList,
+      (state, { payload: { itemId } }) => safelyRemoveAllFromCart(state, itemId),
+    ),
+);
 
 export default availableCartReducer;

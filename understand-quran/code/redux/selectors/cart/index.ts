@@ -1,12 +1,16 @@
 import { createStructuredSelector } from 'reselect';
 
-import { State } from '@redux/reducers';
 import { CartState } from '@redux/reducers/cart';
 
-import availableItemsSelector from './availableItems';
-import unavailableItemsSelector from './unavailableItems';
+import availableItemsSelectors, { AvailableCartItemsResult } from './availableItems';
+import unavailableItemsSelectors, { UnavailableCartItemsResult } from './unavailableItems';
 
-export default createStructuredSelector<State, CartState>({
-  available: availableItemsSelector,
-  unavailable: unavailableItemsSelector,
+export type CartSelectorResult = {
+  availableItems: AvailableCartItemsResult,
+  unavailableItems: UnavailableCartItemsResult,
+};
+
+export default createStructuredSelector<CartState, CartSelectorResult>({
+  availableItems: ({ available }) => availableItemsSelectors(available),
+  unavailableItems: ({ unavailable }) => unavailableItemsSelectors(unavailable),
 });
