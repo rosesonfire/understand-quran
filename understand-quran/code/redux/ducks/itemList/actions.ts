@@ -3,20 +3,13 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { Item, ItemId } from '@uqTypes/business/item';
 import { httpFetcher } from '@utils/http';
 
-export enum ItemListActionType {
+enum ItemListActionType {
   LIST_ITEMS_INITIALIZED = 'LIST_ITEMS_INITIALIZED',
   LIST_ITEM_ADDED = 'LIST_ITEM_ADDED',
   LIST_ITEM_REMOVED = 'LIST_ITEM_REMOVED',
 }
 
-export type ListItemAddedActionPayload = {
-  itemId: ItemId,
-};
-
-export type ListItemRemovedActionPayload = {
-  itemId: ItemId,
-};
-
+// eslint-disable-next-line import/prefer-default-export
 export class ItemListActionFactory {
   static addToItemList = createAction(
     ItemListActionType.LIST_ITEM_ADDED,

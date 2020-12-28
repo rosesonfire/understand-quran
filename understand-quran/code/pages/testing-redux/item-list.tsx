@@ -13,9 +13,8 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import itemListSelectors from '@redux/selectors/itemList';
-import { State } from '@redux/reducers';
-import { ItemListActionFactory } from '@redux/actions/itemList';
+import { selectors, State } from '@redux/ducks';
+import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
 
 // import { ChangeHandler } from '@utils/react-utils';
 import styles from './itemList.module.scss';
@@ -29,11 +28,9 @@ const ItemList: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { items } = typeof window !== undefined
-    ? useSelector<State, ReturnType<typeof itemListSelectors>>(
-      ({ itemList }) => itemListSelectors(itemList),
-    )
-    : { items: null };
+  const { itemList: { items } } = typeof window !== undefined
+    ? useSelector<State, ReturnType<typeof selectors>>(selectors)
+    : { itemList: { items: null } };
 
   useEffect(() => {
     dispatch(ItemListActionFactory.initializeItemList());
