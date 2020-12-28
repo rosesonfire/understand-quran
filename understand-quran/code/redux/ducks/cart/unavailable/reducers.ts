@@ -1,8 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { ItemId } from '@uqTypes/business/item';
-import { CartActionFactory } from '@redux/actions/cart';
-import { ItemListActionFactory } from '@redux/actions/itemList';
+import { CartActionFactory } from '@redux/ducks/cart/actions';
+import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
 import { ErrorType, ErrorFactory } from '@errors';
 
 type UnavailableCartItemCounts = { [itemId: string]: number };
@@ -97,7 +97,7 @@ const safelyRemoveAllFromCart = (
   return restItemCounts;
 })(state);
 
-const unavailableCartReducer = createReducer<UnavailableCartState>(
+export default createReducer<UnavailableCartState>(
   INITIAL_STATE,
   builder => builder
     .addCase(
@@ -113,5 +113,3 @@ const unavailableCartReducer = createReducer<UnavailableCartState>(
       (state, { payload: { itemId } }) => safelyRemoveAllFromCart(state, itemId),
     ),
 );
-
-export default unavailableCartReducer;

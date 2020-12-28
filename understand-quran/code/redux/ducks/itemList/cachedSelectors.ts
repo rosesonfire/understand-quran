@@ -1,7 +1,8 @@
 import { createStructuredCachedSelector } from 're-reselect';
 
-import { ItemListState } from '@redux/reducers/itemList';
 import { ItemId } from '@uqTypes/business/item';
+
+import { ItemListState } from './reducers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const itemExistsInListSelector = createStructuredCachedSelector({

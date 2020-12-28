@@ -1,12 +1,13 @@
 import { createStructuredCachedSelector } from 're-reselect';
 
-import { UnavailableCartState } from '@redux/reducers/cart/unavailable';
 import { ItemId } from '@uqTypes/business/item';
 
+import { AvailableCartState } from './reducers';
+
 // eslint-disable-next-line import/prefer-default-export
-export const singleUnavailableCartItemCountSelector = createStructuredCachedSelector({
+export const singleAvailableCartItemCountSelector = createStructuredCachedSelector({
   singleItemCount: (
-    state: UnavailableCartState,
+    state: AvailableCartState,
     itemId: ItemId,
   ) => state.itemCounts?.[itemId] ?? null,
 })(

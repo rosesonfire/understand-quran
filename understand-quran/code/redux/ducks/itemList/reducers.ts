@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import { Item, ItemId } from '@uqTypes/business/item';
-import { ItemListActionFactory } from '@redux/actions/itemList';
+import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
 import { ErrorType, ErrorFactory } from '@errors';
 
 export type ItemListState = {
@@ -70,7 +70,7 @@ const safelyRemoveFromItemList = (
 
 const initializeItemList = (items: Item[]): ItemListState => ({ items });
 
-const itemListReducer = createReducer<ItemListState>(
+export default createReducer<ItemListState>(
   INITIAL_STATE,
   builder => builder
     .addCase(
@@ -86,5 +86,3 @@ const itemListReducer = createReducer<ItemListState>(
       (state, { payload: { itemId } }) => safelyRemoveFromItemList(state, itemId),
     ),
 );
-
-export default itemListReducer;
