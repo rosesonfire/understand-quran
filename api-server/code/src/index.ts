@@ -1,28 +1,37 @@
+import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
+import { buildSchema, ObjectType, Field, ID, Resolver, Query } from 'type-graphql';
 
-const typeDefs = gql`
- type Item {
-    category: String!
-    id: ID!
-    name: String!
-    price: String!
-  }
+@ObjectType()
+class Item {
+  @Field()
+  category!: string;
 
-  type Post {
-    id: ID!
-    title: String!
-  }
+  @Field(type => ID)
+  id!: string;
 
-  type Query {
-    items: [Item]
-    posts: [Post]
-  }
-`;
+  @Field()
+  name!: string;
 
-const resolvers = {
-  Query: {
-    items: () => [
+  @Field()
+  price!: string;
+}
+
+@ObjectType()
+class Post {
+  @Field(type => ID)
+  id!: string;
+
+  @Field()
+  title!: string;
+}
+
+@Resolver(Item)
+class ItemResolver {
+  @Query(() => [Item])
+  items() {
+    return [
       {
         category: 'food',
         id: '4984',
@@ -41,9 +50,15 @@ const resolvers = {
         name: 'Cake',
         price: '$2 per pound',
       },
-    ],
+    ];
+  }
+}
 
-    posts: () => [
+@Resolver(Post)
+class PostResolver {
+  @Query(() => [Post])
+  posts() {
+    return [
       {
         id: 1,
         title: 'This is a post hello 1',
@@ -52,11 +67,18 @@ const resolvers = {
         id: 2,
         title: 'This is another post hello hello 2',
       },
-    ],
-  },
-};
+    ];
+  }
+}
 
-const server = new ApolloServer({ resolvers, typeDefs });
+const schema = await buildSchema({
+  resolvers: [
+    ItemResolver,
+    PostResolver,
+  ],
+})
+
+const server = new ApolloServer({ schema });
 
 const app = express();
 server.applyMiddleware({ app });

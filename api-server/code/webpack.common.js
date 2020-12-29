@@ -4,6 +4,9 @@ const path = require('path');
 
 module.exports = {
   entry: [path.join(__dirname, 'src/index.ts')],
+  experiments: {
+    topLevelAwait: true,
+  },
   externals: [nodeExternals({})],
   module: {
     rules: [
