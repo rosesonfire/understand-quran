@@ -1,36 +1,37 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import { ItemId } from '@uqTypes/business/item';
 import { CartActionFactory } from '@redux/ducks/cart/actions';
 import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
 import { ErrorType, ErrorFactory } from '@errors';
 
-type AvailableCartItemCounts = { [itemId: string]: number };
+type UnavailableCartItemCounts = { [itemId: string]: number };
 
-export type AvailableCartState = {
-  itemCounts: AvailableCartItemCounts | null,
+export type UnavailableCartState = {
+  itemCounts: UnavailableCartItemCounts | null,
 };
 
-const INITIAL_STATE: AvailableCartState = {
+const INITIAL_STATE: UnavailableCartState = {
   itemCounts: null,
 };
 
-const createItemNotInAvailableCartError = (
-  itemCounts: AvailableCartItemCounts,
+const createItemNotInUnavailableCartError = (
+  itemCounts: UnavailableCartItemCounts,
 ) => ErrorFactory.createError(
   ErrorType.OBJECT_NOT_FOUND,
-  'Item is not in available cart',
+  'Item is not in unavailable cart',
   `itemCounts: ${JSON.stringify(itemCounts)}`,
 );
 
 const createCartNotInitializedError = () => ErrorFactory.createError(
   ErrorType.OBJECT_NOT_INITIALIZED,
-  'Available cart items have not yet been initialized',
+  'Unavailable cart items have not yet been initialized',
 );
 
 const safelyUpdateState = (
-  getUpdatedItemCounts: (itemCounts: AvailableCartItemCounts) => AvailableCartItemCounts,
-) => (state: AvailableCartState) => {
+  getUpdatedItemCounts: (itemCounts: UnavailableCartItemCounts) => UnavailableCartItemCounts,
+) => (state: UnavailableCartState) => {
   const { itemCounts } = state;
 
   if (!itemCounts) {
@@ -44,9 +45,9 @@ const safelyUpdateState = (
 };
 
 const safelyAddToCart = (
-  state: AvailableCartState,
+  state: UnavailableCartState,
   itemId: ItemId,
-): AvailableCartState => safelyUpdateState((itemCounts: AvailableCartItemCounts) => {
+): UnavailableCartState => safelyUpdateState((itemCounts: UnavailableCartItemCounts) => {
   const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
   const newItemCount = itemId in itemCounts ? currentItemCount + 1 : 1;
 
@@ -57,10 +58,10 @@ const safelyAddToCart = (
 })(state);
 
 const safelyRemoveFromCart = (
-  state: AvailableCartState,
+  state: UnavailableCartState,
   itemId: ItemId,
-): AvailableCartState => safelyUpdateState((
-  itemCounts: AvailableCartItemCounts,
+): UnavailableCartState => safelyUpdateState((
+  itemCounts: UnavailableCartItemCounts,
 ) => {
   const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
 
@@ -68,12 +69,12 @@ const safelyRemoveFromCart = (
 
   if (itemId in itemCounts) {
     if (currentItemCount < 1) {
-      throw createItemNotInAvailableCartError(itemCounts);
+      throw createItemNotInUnavailableCartError(itemCounts);
     }
 
     newItemCount = currentItemCount - 1;
   } else {
-    throw createItemNotInAvailableCartError(itemCounts);
+    throw createItemNotInUnavailableCartError(itemCounts);
   }
 
   return newItemCount === 0 ? restItemCounts : {
@@ -83,23 +84,29 @@ const safelyRemoveFromCart = (
 })(state);
 
 const safelyRemoveAllFromCart = (
-  state: AvailableCartState,
+  state: UnavailableCartState,
   itemId: ItemId,
-): AvailableCartState => safelyUpdateState((
-  itemCounts: AvailableCartItemCounts,
+): UnavailableCartState => safelyUpdateState((
+  itemCounts: UnavailableCartItemCounts,
 ) => {
   const { [itemId]: currentItemCount, ...restItemCounts } = itemCounts;
 
   if (!(itemId in itemCounts) || currentItemCount < 1) {
-    throw createItemNotInAvailableCartError(itemCounts);
+    throw createItemNotInUnavailableCartError(itemCounts);
   }
 
   return restItemCounts;
 })(state);
 
-export default createReducer<AvailableCartState>(
+export default createReducer<UnavailableCartState>(
   INITIAL_STATE,
   builder => builder
+    .addCase(HYDRATE, (state, action) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      // eslint-disable-next-line no-console
+      console.log('state:', state, 'payload', action);
+    })
     .addCase(
       CartActionFactory.addToCart,
       (state, { payload: { itemId } }) => safelyAddToCart(state, itemId),

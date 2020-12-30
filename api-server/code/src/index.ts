@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
-import { buildSchema, ObjectType, Field, ID, Resolver, Query } from 'type-graphql';
+import { ApolloServer } from 'apollo-server-express';
+import { buildSchema, ObjectType, Field, ID, Resolver, Query, Args, ArgsType } from 'type-graphql';
 
 @ObjectType()
 class Item {
@@ -27,30 +27,40 @@ class Post {
   title!: string;
 }
 
+@ArgsType()
+class ItemFilterArgs {
+  @Field(type => String)
+  q: string | null = null;
+}
+
+const items: Item[] = [
+  {
+    category: 'food',
+    id: '4984',
+    name: 'Egg',
+    price: '$1 per dozen',
+  },
+  {
+    category: 'toy',
+    id: '9689',
+    name: 'Football',
+    price: '$10',
+  },
+  {
+    category: 'food',
+    id: '4586',
+    name: 'Cake',
+    price: '$2 per pound',
+  },
+];
+
 @Resolver(Item)
 class ItemResolver {
   @Query(() => [Item])
-  items() {
-    return [
-      {
-        category: 'food',
-        id: '4984',
-        name: 'Egg',
-        price: '$1 per dozen',
-      },
-      {
-        category: 'toy',
-        id: '9689',
-        name: 'Football',
-        price: '$10',
-      },
-      {
-        category: 'food',
-        id: '4586',
-        name: 'Cake',
-        price: '$2 per pound',
-      },
-    ];
+  items(@Args() { q }: ItemFilterArgs) {
+    const lowerCasedQ = q?.toLowerCase();
+
+    return lowerCasedQ ? items.filter(({ name }) => name.toLocaleLowerCase().indexOf(lowerCasedQ) > -1) : items;
   }
 }
 

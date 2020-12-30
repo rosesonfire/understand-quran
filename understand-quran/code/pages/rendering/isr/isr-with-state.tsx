@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { GetStaticProps } from 'next';
+import React, { useState } from 'react';
+import { GetStaticProps, NextPage } from 'next';
 import PropTypes from 'prop-types';
 
 import { Card, CardItem } from '@components';
@@ -10,7 +10,7 @@ type Props = {
   value2: string,
 };
 
-const ISRWithState: FC<Props> = ({ value1, value2 }) => {
+const ISRWithState: NextPage<Props> = ({ value1, value2 }) => {
   const [name, setName] = useState('<name>');
 
   const onChange = ChangeHandler.getKeyPressHandler(setName);

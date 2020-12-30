@@ -1,14 +1,63 @@
-import React, { FC } from 'react';
-import { Provider } from 'react-redux';
+import React, { FC, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { batch, useDispatch, useSelector } from 'react-redux';
 
 import '@styles/global.scss';
 import { siteDescription, siteTitle } from '@copies/global';
-import store from '@redux/store';
+import { reduxNextAppWrapper } from '@redux/store';
+import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
+import { selector, State } from '@redux/ducks';
 
 // eslint-disable-next-line react/prop-types
-const App: FC<AppProps> = ({ Component, pageProps }) => (
+const MainContent: FC<AppProps> = ({ Component, pageProps }) => {
+  const dispatch = useDispatch();
+  const { itemList: { items } } = useSelector<State, ReturnType<typeof selector>>(selector);
+
+  useEffect(() => {
+    dispatch(ItemListActionFactory.initializeItemList());
+  }, []);
+
+  useEffect(() => {
+    if (items) {
+      batch(() => {
+        dispatch(ItemListActionFactory.addToItemList(
+          {
+            category: 'furniture',
+            id: '8524',
+            name: 'Chair',
+            price: '$20',
+          },
+        ));
+
+        dispatch(ItemListActionFactory.addToItemList(
+          {
+            category: 'electronics',
+            id: '7891',
+            name: 'Keyboard',
+            price: '$100',
+          },
+        ));
+      });
+    }
+  }, [items === null]);
+
+  return (
+    <>
+      <div className="uq-Modals-container" />
+
+      <div className="uq-App">
+        <main>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Component {...pageProps} />
+        </main>
+      </div>
+    </>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const App: FC<AppProps> = ({ Component, pageProps, router }) => (
   <>
     <Head>
       <title>Home</title>
@@ -26,16 +75,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     </Head>
 
-    <div className="uq-Modals-container" />
-
-    <div className="uq-App">
-      <main>
-        <Provider store={store}>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <Component {...pageProps} />
-        </Provider>
-      </main>
-    </div>
+    <MainContent
+      Component={Component}
+      pageProps={pageProps}
+      router={router}
+    />
 
     <footer>
       <a
@@ -51,4 +95,4 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
   </>
 );
 
-export default App;
+export default reduxNextAppWrapper.withRedux(App);

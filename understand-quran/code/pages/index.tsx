@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { NextPage } from 'next';
 import Link from 'next/link';
 import {
   Link as MaterialLink,
@@ -7,7 +8,7 @@ import {
 
 import { PageLinks } from '@components';
 
-const Index: FC = () => (
+const Index: NextPage = () => (
   <>
     <Typography variant="h1">
       Read

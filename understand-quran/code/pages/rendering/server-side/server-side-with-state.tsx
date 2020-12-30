@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 import { ChangeHandler } from '@utils/react-utils';
@@ -10,7 +10,7 @@ type Props = {
   serverTime: string,
 };
 
-const ServerSideWithState: FC<Props> = ({ headers, serverTime }) => {
+const ServerSideWithState: NextPage<Props> = ({ headers, serverTime }) => {
   const [name, setName] = useState('<name>');
 
   const onChange = ChangeHandler.getKeyPressHandler(setName);

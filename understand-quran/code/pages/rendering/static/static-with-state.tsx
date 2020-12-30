@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
+import { NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 import { ChangeHandler } from '@utils/react-utils';
 
-const StaticWithState: FC = () => {
+const StaticWithState: NextPage = () => {
   const [name, setName] = useState('<name>');
 
   const onChange = ChangeHandler.getKeyPressHandler(setName);

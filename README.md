@@ -27,6 +27,9 @@ Helps understanding the Holy Qur'an
     - Re-reselect
     - React Redux
     - Redux Toolkit
+    - Next Redux Wrapper
+1. <img src="icons/rxjs.png" height="16"/> RxJS
+1. <img src="icons/redux_observable.gif" height="16"/> Redux Observable
 1. <img src="icons/docker.jpeg" height="16"/> Docker
 1. <img src="icons/docker_compose.png" height="16"/> Docker Compose
 1. <img src="icons/stylelint.png" height="16"/> Stylelint
