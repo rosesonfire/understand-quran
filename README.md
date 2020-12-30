@@ -10,6 +10,7 @@ Helps understanding the Holy Qur'an
 1. <img src="icons/css.png" height="16"/> CSS
 1. <img src="icons/sass.png" height="16"/> SCSS
 1. <img src="icons/yml.png" height="16"/> YAML
+1. <img src="icons/graph_ql.png" height="16"/> GraphQL
 
 ## Frameworks and libraries
 1. <img src="icons/react.png" height="16"/> ReactJS
