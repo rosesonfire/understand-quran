@@ -1,17 +1,31 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { createEpicMiddleware } from 'redux-observable';
+import { createEpicMiddleware } from 'redux-observable';
+import { createWrapper, Context, MakeStore } from 'next-redux-wrapper';
+import { Environment } from '@constants';
 
-import { /* epic, */ reducers } from './ducks';
+import { epic, reducer, State } from './ducks';
 
-// const epicMiddleware = createEpicMiddleware();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const makeStore: MakeStore<State> = (_context: Context) => {
+  const epicMiddleware = createEpicMiddleware();
 
-const store = configureStore({
-  // middleware: [
-  //   epicMiddleware,
-  // ],
-  reducer: reducers,
-});
+  const store = configureStore({
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([
+      epicMiddleware,
+    ]),
 
-// epicMiddleware.run(rootEpic);
+    reducer,
+  });
 
-export default store;
+  epicMiddleware.run(epic);
+
+  return store;
+};
+
+// eslint-disable-next-line import/prefer-default-export, @typescript-eslint/no-unused-vars
+export const reduxNextAppWrapper = createWrapper<State>(
+  makeStore,
+  {
+    debug: process.env.NODE_ENV === Environment.development,
+  },
+);

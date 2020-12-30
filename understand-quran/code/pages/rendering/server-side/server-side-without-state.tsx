@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 
@@ -9,7 +9,7 @@ type Props = {
   serverTime: string,
 };
 
-const ServerSideWithoutState: FC<Props> = ({ headers, serverTime }) => (
+const ServerSideWithoutState: NextPage<Props> = ({ headers, serverTime }) => (
   <Card>
     <CardItem
       name="Headers"

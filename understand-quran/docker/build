@@ -26,7 +26,7 @@ do
   sleep 1
 done
 
-/reinstall-design-library
+# /reinstall-design-library
 
 # If environment is 'production' build the project.
 # If environment is 'dev' run the project in 'dev' mode
@@ -42,7 +42,13 @@ then
 else
   echo "Starting in 'dev' mode ..."
 
-  while ! (yarn run lint && yarn run dev)
+  while ! yarn run lint
+  do
+    echo "$(date) - Linting failing..."
+    sleep 1
+  done
+
+  while ! yarn run dev
   do
     echo "$(date) - restarting server ..."
     sleep 1

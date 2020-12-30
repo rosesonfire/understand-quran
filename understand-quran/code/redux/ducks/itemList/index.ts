@@ -1,10 +1,11 @@
 import { itemExistsInListSelector } from './cachedSelectors';
 
-export { default as itemListReducers } from './reducers';
-export type { ItemListState } from './reducers';
-export { default as itemListSelectors } from './selectors';
+export { default as reducer } from './reducer';
+export type { ItemListState } from './reducer';
+export { default as selector } from './selectors';
 export type { ItemsListSelectorsResult } from './selectors';
+export { default as epic } from './epic';
 
-export const itemListCachedSelectors = {
+export const cachedSelector = {
   itemExistsInListSelector,
 };

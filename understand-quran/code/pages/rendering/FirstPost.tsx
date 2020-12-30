@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { NextPage } from 'next';
 import Link from 'next/link';
 
 import { Button, Layout } from '@components';
 import { useModal, useSwitch } from '@hooks';
 
-const FirstPost: FC = () => {
+const FirstPost: NextPage = () => {
   const [shouldShowModal,, setShouldShowModal] = useSwitch();
 
   const modal = useModal({

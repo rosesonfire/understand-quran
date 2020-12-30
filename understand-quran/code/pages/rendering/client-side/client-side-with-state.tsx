@@ -1,12 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
+import { NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 import { ChangeHandler } from '@utils/react-utils';
 import { useSWRWithHTTP } from '@hooks';
 import { Post } from '@uqTypes/business/post';
 
-const ClientSideWithState: FC = () => {
+const ClientSideWithState: NextPage = () => {
   const [clickCount, setClickCount] = useState(0);
   const { data: posts } = useSWRWithHTTP<Post[]>('/api/posts');
   const { error } = useSWRWithHTTP<Post[]>('/api/wrong-url');

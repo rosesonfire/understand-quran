@@ -1,8 +1,10 @@
-import React, { FC, useEffect } from 'react';
-import { /* batch , */useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { NextPage } from 'next';
 import Link from 'next/link';
-import { Skeleton } from '@material-ui/lab';
+import { Autocomplete, Skeleton } from '@material-ui/lab';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -10,55 +12,76 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@material-ui/core';
 
-import { selectors, State } from '@redux/ducks';
-import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
+import { Item } from '@uqTypes/business/item';
+import { selector, State } from '@redux/ducks';
+import { ActionFactory } from '@redux/ducks/actions';
+import { ChangeHandler } from '@utils/react-utils';
 
-// import { ChangeHandler } from '@utils/react-utils';
 import styles from './itemList.module.scss';
 
-const ItemList: FC = () => {
+const SEARCH_ENDPOINT = '/api/itemIds';
+
+const ItemList: NextPage = () => {
+  const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [areSuggestionsDisplayed, setAreSuggestionsDisplayed] = useState(false);
   // const [clickCount, setClickCount] = useState(0);
   // const { data: posts } = HTTPAPI.get<Posts[]>('/api/posts');
   // const { error } = HTTPAPI.get<Posts[]>('/api/wrong-url');
 
   // const handleClick = ChangeHandler.getClickHandler(() => setClickCount(clickCount + 1));
+  const {
+    itemList: { items },
+    searchedItems,
+  } = useSelector<State, ReturnType<typeof selector>>(selector);
 
-  const dispatch = useDispatch();
-
-  const { itemList: { items } } = typeof window !== undefined
-    ? useSelector<State, ReturnType<typeof selectors>>(selectors)
-    : { itemList: { items: null } };
-
-  useEffect(() => {
-    dispatch(ItemListActionFactory.initializeItemList());
-
-    // Use Redux observables for this
-    // batch(() => {
-    //   dispatch(ItemListActionFactory.addToItemList(
-    //     {
-    //       category: 'furniture',
-    //       id: '8524',
-    //       name: 'Chair',
-    //       price: '$20',
-    //     },
-    //   ));
-
-    //   dispatch(ItemListActionFactory.addToItemList(
-    //     {
-    //       category: 'electronics',
-    //       id: '7891',
-    //       name: 'Keyboard',
-    //       price: '$100',
-    //     },
-    //   ));
-    // });
-  }, []);
+  const searchItems = items?.filter(({ id }) => searchedItems.itemIds?.includes(id)) ?? null;
 
   return (
     <div className={styles['uq-ItemList']}>
+      <Autocomplete<Item, undefined, undefined, true>
+        autoComplete
+        autoHighlight
+        blurOnSelect
+        clearOnBlur
+        clearOnEscape
+        freeSolo
+        fullWidth
+        getOptionLabel={(option) => option.name}
+        getOptionSelected={(option, value) => option.name === value.name}
+        inputValue={searchedItems.searchText ?? ''}
+        loading={!items}
+        onClose={() => setAreSuggestionsDisplayed(false)}
+        onOpen={() => setAreSuggestionsDisplayed(true)}
+        open={areSuggestionsDisplayed}
+        options={searchItems ?? []}
+        renderInput={(params) => (
+          <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {items ? null : <CircularProgress color="inherit" size={20} />}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            }}
+            label="Item"
+            onChange={ChangeHandler.getKeyPressHandler(
+              value => dispatch(ActionFactory.initiateSearch(value, `${SEARCH_ENDPOINT}?q=${value}`)),
+            )}
+            variant="outlined"
+          />
+        )}
+        style={{ width: 300 }}
+      />
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

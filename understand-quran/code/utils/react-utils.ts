@@ -52,7 +52,9 @@ export class ChangeHandler {
 
   static getKeyPressHandler = (
     cb: (value: string) => void,
-  ): ChangeEventHandler<HTMLInputElement> => (event: ChangeEvent<HTMLInputElement>) => {
+  ): ChangeEventHandler<HTMLInputElement> => (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
     event.stopPropagation();
     event.preventDefault();
 

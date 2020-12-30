@@ -1,11 +1,11 @@
 import { createStructuredSelector } from 'reselect';
 
-import { ItemListState } from './reducers';
+import { ItemListState } from './reducer';
 
 export type ItemsListSelectorsResult = {
   items: ItemListState['items'],
 };
 
-export default createStructuredSelector<ItemListState, ItemsListSelectorsResult>({
-  items: ({ items }) => items,
+export default createStructuredSelector<ItemListState | undefined, ItemsListSelectorsResult>({
+  items: state => state?.items ?? null,
 });

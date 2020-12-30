@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import { Item, ItemId } from '@uqTypes/business/item';
 import { ItemListActionFactory } from '@redux/ducks/itemList/actions';
@@ -73,6 +74,12 @@ const initializeItemList = (items: Item[]): ItemListState => ({ items });
 export default createReducer<ItemListState>(
   INITIAL_STATE,
   builder => builder
+    .addCase(HYDRATE, (state, action) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      // eslint-disable-next-line no-console
+      console.log('state:', state, 'payload', action);
+    })
     .addCase(
       ItemListActionFactory.initializeItemList.fulfilled,
       (_state, { payload: { items } }) => initializeItemList(items),

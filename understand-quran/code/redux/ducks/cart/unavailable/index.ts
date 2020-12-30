@@ -1,10 +1,11 @@
 import { singleUnavailableCartItemCountSelector } from './cachedSelectors';
 
-export { default as unavailableCartReducers } from './reducers';
-export type { UnavailableCartState } from './reducers';
-export { default as unavailableCartSelectors } from './selectors';
-export type { UnavailableCartSelectorsResult } from './selectors';
+export { default as reducer } from './reducer';
+export type { UnavailableCartState } from './reducer';
+export { default as selector } from './selector';
+export type { UnavailableCartSelectorsResult } from './selector';
+export { default as epic } from './epic';
 
-export const unavailableCartCachedSelectors = {
+export const cachedSelectors = {
   singleUnavailableCartItemCountSelector,
 };

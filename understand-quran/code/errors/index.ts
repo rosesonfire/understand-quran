@@ -3,7 +3,7 @@ import { Environment } from '@constants';
 
 export class UQError extends Error {
   constructor(code: number, message?: string, debugMessage?: string) {
-    super(`Error code: ${code}. ${message}. ${process.env[Environment.dev] ? debugMessage : ''}`);
+    super(`Error code: ${code}. ${message}. ${process.env.NODE_ENV === Environment.development ? debugMessage : ''}`);
   }
 }
 

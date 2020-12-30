@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { GetStaticProps } from 'next';
+import React from 'react';
+import { GetStaticProps, NextPage } from 'next';
 import PropTypes from 'prop-types';
 
 import { Card, CardItem } from '@components';
@@ -9,7 +9,7 @@ type Props = {
   value2: string,
 };
 
-const SSGWithoutState: FC<Props> = ({ value1, value2 }) => (
+const SSGWithoutState: NextPage<Props> = ({ value1, value2 }) => (
   <Card>
     <CardItem
       name="Item 1"

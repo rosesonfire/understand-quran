@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 import { useSWRWithHTTP } from '@hooks';
 import { Post } from '@uqTypes/business/post';
 
-const ClientSideWithoutState: FC = () => {
+const ClientSideWithoutState: NextPage = () => {
   const { data: posts } = useSWRWithHTTP<Post[]>('/api/posts');
   const { error } = useSWRWithHTTP<Post[]>('/api/wrong-url');
 

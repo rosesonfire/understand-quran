@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { NextPage } from 'next';
 
 import { Card, CardItem } from '@components';
 
-const StaticWithoutState: FC = () => (
+const StaticWithoutState: NextPage = () => (
   <Card>
     <CardItem
       name="Item 1"
